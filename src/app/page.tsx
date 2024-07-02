@@ -1,20 +1,22 @@
 'use client';
 
-import { Group, Header, Panel, PanelHeader, SimpleCell, SplitCol, SplitLayout, View } from "@vkontakte/vkui";
+import { Group, Header, Panel, PanelHeader, SimpleCell, SplitCol, SplitLayout } from "@vkontakte/vkui";
+import { Link } from "@/components/Link"
 
 export default function Home() {
   return (
     <SplitLayout header={<PanelHeader delimiter="none" />}>
       <SplitCol autoSpaced>
-        <View activePanel="main">
-          <Panel id="main">
-            <PanelHeader>VKUI</PanelHeader>
-            <Group header={<Header mode="secondary">Items</Header>}>
-              <SimpleCell>Hello</SimpleCell>
-              <SimpleCell>World</SimpleCell>
-            </Group>
-          </Panel>
-        </View>
+        <Panel>
+          <PanelHeader>Amorqu</PanelHeader>
+          <Group header={<Header mode="secondary">Items</Header>}>
+            <SimpleCell>Hello</SimpleCell>
+            <SimpleCell>World</SimpleCell>
+            <SimpleCell>
+              <Link href="/profile">Profile</Link>
+            </SimpleCell>
+          </Group>
+        </Panel>
       </SplitCol>
     </SplitLayout>
   );
