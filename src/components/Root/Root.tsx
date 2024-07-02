@@ -1,6 +1,6 @@
 'use client';
 
-import { type PropsWithChildren, useEffect, useMemo, useState } from 'react';
+import { type PropsWithChildren, useEffect, useMemo } from 'react';
 import {
   SDKProvider,
   useLaunchParams,
@@ -11,15 +11,17 @@ import {
   bindThemeParamsCSSVars,
   bindViewportCSSVars,
 } from '@tma.js/sdk-react';
-import { TonConnectUIProvider } from '@tonconnect/ui-react';
-import { AppRoot } from '@telegram-apps/telegram-ui';
+
+import {
+  AdaptivityProvider,
+  ConfigProvider,
+  AppRoot
+} from '@vkontakte/vkui';
 
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { ErrorPage } from '@/components/ErrorPage';
 import { useTelegramMock } from '@/hooks/useTelegramMock';
 import { useDidMount } from '@/hooks/useDidMount';
-
-import './styles.css';
 
 function App(props: PropsWithChildren) {
   const lp = useLaunchParams();
@@ -40,12 +42,16 @@ function App(props: PropsWithChildren) {
   }, [viewport]);
 
   return (
-    <AppRoot
+    <ConfigProvider
       appearance={miniApp.isDark ? 'dark' : 'light'}
-      platform={['macos', 'ios'].includes(lp.platform) ? 'ios' : 'base'}
+      platform={['macos', 'ios'].includes(lp.platform) ? 'ios' : 'android'}
     >
-      {props.children}
-    </AppRoot>
+      <AdaptivityProvider>
+        <AppRoot className="select-none">
+          {props.children}
+        </AppRoot>
+      </AdaptivityProvider>
+    </ConfigProvider>
   );
 }
 
@@ -57,9 +63,6 @@ function RootInner({ children }: PropsWithChildren) {
   }
 
   const debug = useLaunchParams().startParam === 'debug';
-  const manifestUrl = useMemo(() => {
-    return new URL('tonconnect-manifest.json', window.location.href).toString();
-  }, []);
 
   // Enable debug mode to see all the methods sent and events received.
   useEffect(() => {
@@ -69,13 +72,11 @@ function RootInner({ children }: PropsWithChildren) {
   }, [debug]);
 
   return (
-    <TonConnectUIProvider manifestUrl={manifestUrl}>
-      <SDKProvider acceptCustomStyles debug={debug}>
-        <App>
-          {children}
-        </App>
-      </SDKProvider>
-    </TonConnectUIProvider>
+    <SDKProvider acceptCustomStyles debug={debug}>
+      <App>
+        {children}
+      </App>
+    </SDKProvider>
   );
 }
 
@@ -86,7 +87,7 @@ export function Root(props: PropsWithChildren) {
 
   return didMount ? (
     <ErrorBoundary fallback={ErrorPage}>
-      <RootInner {...props}/>
+      <RootInner {...props} />
     </ErrorBoundary>
-  ) : <div className="root__loading">Loading</div>;
+  ) : <div>Loading...</div>;
 }
