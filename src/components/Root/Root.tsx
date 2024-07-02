@@ -1,6 +1,6 @@
 'use client';
 
-import { type PropsWithChildren, useEffect, useMemo } from 'react';
+import { type PropsWithChildren, useEffect } from 'react';
 import {
   SDKProvider,
   useLaunchParams,
@@ -17,6 +17,9 @@ import {
   ConfigProvider,
   AppRoot
 } from '@vkontakte/vkui';
+
+import '@/app.css';
+import '@/tailwind.css';
 
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { ErrorPage } from '@/components/ErrorPage';
@@ -89,5 +92,5 @@ export function Root(props: PropsWithChildren) {
     <ErrorBoundary fallback={ErrorPage}>
       <RootInner {...props} />
     </ErrorBoundary>
-  ) : <div>Loading...</div>;
+  ) : null;
 }
