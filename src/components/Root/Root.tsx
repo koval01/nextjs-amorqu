@@ -18,6 +18,11 @@ import {
   AppRoot
 } from '@vkontakte/vkui';
 
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+
+import i18nStrings from "@/i18n";
+
 import '@/app.css';
 import '@/tailwind.css';
 
@@ -26,11 +31,26 @@ import { ErrorPage } from '@/components/ErrorPage';
 import { useTelegramMock } from '@/hooks/useTelegramMock';
 import { useDidMount } from '@/hooks/useDidMount';
 
+const i18nHook = i18n.use(initReactI18next);
+
+i18nHook.init({
+  resources: i18nStrings,
+  fallbackLng: "en",
+
+  interpolation: {
+    escapeValue: false
+  }
+});
+
 function App(props: PropsWithChildren) {
   const lp = useLaunchParams();
   const miniApp = useMiniApp();
   const themeParams = useThemeParams();
   const viewport = useViewport();
+
+  useEffect(() => { 
+    i18nHook.changeLanguage(lp.initData?.user?.languageCode) 
+  }, [lp]);
 
   useEffect(() => {
     return bindMiniAppCSSVars(miniApp, themeParams);
