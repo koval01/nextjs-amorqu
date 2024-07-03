@@ -15,6 +15,7 @@ const BackButton: FC = () => {
         <PanelHeaderButton
             onClick={() => router.back()}
             aria-label={t("Back")}
+            className="ml-3"
         >
             <Icon28ChevronBack className="!p-0" />
         </PanelHeaderButton>
