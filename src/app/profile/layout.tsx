@@ -3,6 +3,8 @@
 import type { PropsWithChildren } from 'react';
 
 import { Panel, PanelHeader, SplitCol, SplitLayout } from '@vkontakte/vkui';
+import BackButton from '@/components/BackButton';
+
 import { useTranslation } from 'react-i18next';
 
 export default function RootLayout({ children }: PropsWithChildren) {
@@ -11,8 +13,8 @@ export default function RootLayout({ children }: PropsWithChildren) {
     return (
         <SplitLayout header={<PanelHeader delimiter="none" />}>
             <SplitCol autoSpaced>
-                <Panel>
-                    <PanelHeader>{t("Profile")}</PanelHeader>
+                <Panel className="max-w-[920px] m-auto">
+                    <PanelHeader before={<BackButton />}>{t("Profile")}</PanelHeader>
                     { children }
                 </Panel>
             </SplitCol>
