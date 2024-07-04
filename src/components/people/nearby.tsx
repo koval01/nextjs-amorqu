@@ -1,0 +1,87 @@
+import { ProfileNear } from "@/api";
+import formatLocation from "@/helpers/geo";
+
+import { Avatar, Group, Header, Link, SimpleCell, Skeleton } from "@vkontakte/vkui";
+import { TFunction } from "i18next";
+import { useTranslation } from "react-i18next";
+
+interface NearbyProps {
+    profiles: ProfileNear[] | null;
+}
+
+interface HeaderCompoment extends NearbyProps {
+    t: TFunction<"translation", undefined>
+}
+interface CellComponentProps extends HeaderCompoment { }
+
+interface AvatarProps {
+    profile: ProfileNear
+}
+
+const HeaderCompoment = ({ profiles, t }: HeaderCompoment) => (
+    <Header mode="secondary">
+        {!profiles ? <Skeleton width={120} /> : t("Recently joined")}
+    </Header>
+);
+
+const SkeletonComponent = () => (
+    <>
+        {[...Array(5)].map((_, i) => (
+            <SimpleCell
+                key={i}
+                before={<Skeleton width={48} height={48} borderRadius="50%" />}
+                subtitle={<Skeleton width={75} />}
+            >
+                <Skeleton width={100} />
+            </SimpleCell>
+        ))}
+    </>
+);
+
+const AvatarComponent = ({ profile }: AvatarProps) => (
+    <>
+        {
+            profile?.avatar ?
+                <Avatar size={48} src={profile?.avatar} /> :
+                <Avatar size={48} src="#" initials={profile.displayName.slice(0, 1)} />
+        }
+    </>
+);
+
+const CellComponent = ({ profiles, t }: CellComponentProps) => (
+    <>
+        {
+            profiles?.map((profile, index) => (
+                <Link
+                    key={index}
+                    href={`#/profile/${profile.id}`}
+                    hoverClassName="bg-neutral-500"
+                >
+                    <SimpleCell
+                        before={<AvatarComponent profile={profile} />}
+                        subtitle={formatLocation(profile, t)}
+                    >
+                        {profile?.displayName}
+                    </SimpleCell>
+                </Link>
+            ))
+        }
+    </>
+);
+
+const Nearby = ({ profiles }: NearbyProps) => {
+    const { t } = useTranslation();
+
+    return (
+        <Group
+            header={<HeaderCompoment profiles={profiles} t={t} />}
+        >
+            {!profiles ?
+                <SkeletonComponent /> :
+                <CellComponent profiles={profiles} t={t} />
+            }
+        </Group>
+    )
+}
+
+export default Nearby;
