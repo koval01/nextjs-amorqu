@@ -1,8 +1,8 @@
-import countries from "./countries";
-import cities from "./cities";
-import menu from "./menu";
+import { countries } from "./countries";
+import { cities } from "./cities";
+import { menu } from "./menu";
 
-export default {
+export const i18nStrings = {
     "ru": {
         "translation": {
             "Edit": "Редактировать",

@@ -1,4 +1,4 @@
-export default {
+export const cities = {
     "ru": {
         "translation": {
             "Moscow": "Москва",
