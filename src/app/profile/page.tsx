@@ -1,7 +1,5 @@
 'use client';
 
-export const runtime = 'edge';
-
 import { useCallback, useEffect, useState } from 'react';
 
 import ApiService, { Interest, ProfileDetails, ProfilePicture } from '@/api';
@@ -13,6 +11,8 @@ import ErrorSnackbar from '@/components/ErrorSnackbar';
 import Main from '@/components/profile/main';
 import Details from '@/components/profile/details';
 import Gallery from '@/components/profile/gallery';
+
+export const runtime = 'edge';
 
 export default function Porfile() {
     const initData = useLaunchParams().initDataRaw;
