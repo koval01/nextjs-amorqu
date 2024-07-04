@@ -1,7 +1,10 @@
 import { ProfileNear } from "@/api";
 import formatLocation from "@/helpers/geo";
 
-import { Avatar, Group, Header, Link, SimpleCell, Skeleton } from "@vkontakte/vkui";
+import { Avatar, Group, Header, SimpleCell, Skeleton } from "@vkontakte/vkui";
+
+import { Link } from "@/components/Link";
+
 import { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 
@@ -54,8 +57,7 @@ const CellComponent = ({ profiles, t }: CellComponentProps) => (
             profiles?.map((profile, index) => (
                 <Link
                     key={index}
-                    href={`#/profile/${profile.id}`}
-                    hoverClassName="bg-neutral-500"
+                    href={`/profile/${profile.id}`}
                 >
                     <SimpleCell
                         before={<AvatarComponent profile={profile} />}

@@ -4,7 +4,9 @@ export default {
             "Feed": "Новости",
             "People": "Люди",
             "Profile": "Профиль",
-            "Back": "Назад"
+            "Back": "Назад",
+            "Pages": "Страницы",
+            "Home": "Дом"
         }
     },
     "uk": {
@@ -12,7 +14,9 @@ export default {
             "Feed": "Новини",
             "People": "Люди",
             "Profile": "Профіль",
-            "Back": "Назад"
+            "Back": "Назад",
+            "Pages": "Сторінки",
+            "Home": "Дім"
         }
     }
 }
