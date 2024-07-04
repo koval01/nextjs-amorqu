@@ -82,7 +82,7 @@ const ProfileStatus = ({ profile, t }: ProfileStatusProps) => (
             color: 'var(--vkui--color_text_secondary)',
         }}
     >
-        {!profile ? <Skeleton width={100} /> : profile?.visible ? `${t("Visible")} 😋` : `${t("Hidden")} 😎`}
+        {!profile ? <Skeleton width={100} /> : profile.visible !== void 0 && (profile?.visible ? `${t("Visible")} 😋` : `${t("Hidden")} 😎`)}
     </Text>
 );
 
@@ -91,7 +91,7 @@ const ProfileButtons = ({ profile, t }: ProfileButtons) => (
         {!profile ?
             <Skeleton width={80} height={32} />
             :
-            <Button
+            profile.visible !== void 0 && <Button
                 size="m"
                 mode="secondary"
                 disabled={false}

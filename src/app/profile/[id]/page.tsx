@@ -12,7 +12,7 @@ import Main from '@/components/profile/main';
 import Details from '@/components/profile/details';
 import Gallery from '@/components/profile/gallery';
 
-export default function Porfile() {
+export default function OtherProfile({ params }: { params: { id: string } }) {
     const initData = useLaunchParams().initDataRaw;
 
     const [snackbar, setSnackbar] = useState<React.JSX.Element | null>(null);
@@ -35,9 +35,9 @@ export default function Porfile() {
         const apiService = await ApiService.create(initData);
 
         try {
-            setProfile(await apiService.getProfileDetails());
-            setInterest(await apiService.getProfileInterests());
-            setPictures(await apiService.getProfilePictures());
+            setProfile(await apiService.getProfileById(params.id));
+            setInterest(await apiService.getInterestsByProfileId(params.id));
+            setPictures(await apiService.getPicturesByProfileId(params.id));
             setFetchError(false); // Reset error state if successful
         } catch (error) {
             console.error('Error during data fetching', error);
