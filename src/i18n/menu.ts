@@ -4,6 +4,7 @@ export const menu = {
             "Feed": "Новости",
             "People": "Люди",
             "Profile": "Профиль",
+            "Settings": "Настройки",
             "Back": "Назад",
             "Pages": "Страницы",
             "Home": "Дом"
@@ -14,6 +15,7 @@ export const menu = {
             "Feed": "Новини",
             "People": "Люди",
             "Profile": "Профіль",
+            "Settings": "Налаштування",
             "Back": "Назад",
             "Pages": "Сторінки",
             "Home": "Дім"

@@ -3,6 +3,11 @@ import { cities } from "./cities";
 import { menu } from "./menu";
 
 export const i18nStrings = {
+    "en": {
+        "translation": {
+            "Settings description": "You can always delete all the data you give us by submitting a profile deletion request or through technical support."
+        }
+    },
     "ru": {
         "translation": {
             "Edit": "Редактировать",
@@ -21,7 +26,8 @@ export const i18nStrings = {
             "now": "сейчас",
             ...countries["ru"].translation,
             ...cities["ru"].translation,
-            ...menu["ru"].translation
+            ...menu["ru"].translation,
+            "Settings description": "Все данные которые вы нам передаете вы всегда можете удалить отправив запрос на удаление профиля или через техническую поддержку."
         }
     },
     "uk": {
@@ -42,7 +48,8 @@ export const i18nStrings = {
             "now": "зараз",
             ...countries["uk"].translation,
             ...cities["uk"].translation,
-            ...menu["uk"].translation
+            ...menu["uk"].translation,
+            "Settings description": "Всі дані які ви нам передаєте ви завжди можете видалити відправивши запит на видалення профілю або через технічну підтримку."
         }
     }
 }

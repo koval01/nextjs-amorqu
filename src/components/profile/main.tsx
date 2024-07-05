@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { ProfileDetails } from '@/api';
 
@@ -33,15 +34,11 @@ const profileStyles: CSSProperties = {
 };
 
 const ProfileAvatar = ({ profile }: ProfileAvatarProps) => (
-    <>
-        {
-            !profile ?
-                <Skeleton width={96} height={96} borderRadius="50%" /> :
-                profile?.avatar ?
-                    <Avatar size={96} src={profile?.avatar} /> :
-                    <Avatar size={96} src="#" initials={profile.displayName.slice(0, 1)} />
-        }
-    </>
+    !profile ?
+        <Skeleton width={96} height={96} borderRadius="50%" /> :
+        profile?.avatar ?
+            <Avatar size={96} src={profile?.avatar} /> :
+            <Avatar size={96} src="#" initials={profile.displayName.slice(0, 1)} />
 );
 
 const VerifiedComponent = ({ profile, t }: ProfileVerifiedProps) => (
@@ -86,22 +83,23 @@ const ProfileStatus = ({ profile, t }: ProfileStatusProps) => (
     </Text>
 );
 
-const ProfileButtons = ({ profile, t }: ProfileButtons) => (
-    <>
-        {!profile ?
+const ProfileButtons = ({ profile, t }: ProfileButtons) => {
+    const router = useRouter();
+
+    return (
+        !profile ?
             <Skeleton width={80} height={32} />
             :
             profile.visible !== void 0 && <Button
                 size="m"
                 mode="secondary"
                 disabled={false}
-                onClick={() => { }}
+                onClick={() => router.push("/settings")}
             >
                 {t("Edit")}
             </Button>
-        }
-    </>
-);
+    )
+};
 
 const Main = ({ profile }: MainProps) => {
     const { t } = useTranslation();
