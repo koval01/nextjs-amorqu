@@ -24,59 +24,51 @@ interface DetailsProps {
 }
 
 const Location = ({ profile, t }: LocationProps) => (
-    <>
-        {profile?.country ? (
-            <SimpleCell before={<Icon28PlaceOutline />} subtitle={t(profile?.country)}>
-                {t(profile?.city)}
-            </SimpleCell>
-        ) : null}
-    </>
+    profile?.country ? (
+        <SimpleCell before={<Icon28PlaceOutline />} subtitle={t(profile?.country)}>
+            {t(profile?.city)}
+        </SimpleCell>
+    ) : null
 );
 
 const Personality = ({ profile, t }: PersonalityProps) => (
-    <>
-        {profile?.personality ? (
-            <SimpleCell before={<Icon28MagicHatOutline />} subtitle={t("Personality")}>
-                {profile?.personality}
-            </SimpleCell>
-        ) : null}
-    </>
+    profile?.personality ? (
+        <SimpleCell before={<Icon28MagicHatOutline />} subtitle={t("Personality")}>
+            {profile?.personality}
+        </SimpleCell>
+    ) : null
 );
 
 const Interests = ({ interests, t }: InterestsProps) => (
-    <>
-        {interests?.length ? (
-            <SimpleCell before={<Icon28EditOutline />} subtitle={t("Interests")}>
-                <div className="flex flex-wrap gap-2">
-                    {interests?.map((interest, index) => (
-                        <ContentBadge
-                            key={index}
-                            size="l"
-                            appearance="accent"
-                            mode="primary"
-                            capsule={false}
-                        >
-                            {interest.interest}
-                        </ContentBadge>
-                    ))}
-                </div>
-            </SimpleCell>
-        ) : null}
-    </>
+    interests?.length ? (
+        <SimpleCell before={<Icon28EditOutline />} subtitle={t("Interests")}>
+            <div className="flex flex-wrap gap-2">
+                {interests?.map((interest, index) => (
+                    <ContentBadge
+                        key={index}
+                        size="l"
+                        appearance="accent"
+                        mode="primary"
+                        capsule={false}
+                    >
+                        {interest.interest}
+                    </ContentBadge>
+                ))}
+            </div>
+        </SimpleCell>
+    ) : null
 );
 
 const DetailsSkeleton = () => (
-    <>
-        {[...Array(5)].map((_, i) => (
-            <SimpleCell
-                key={i}
-                before={<Skeleton width={28} height={28} borderRadius="15%" />}
-                subtitle={<Skeleton width={140} />}
-            >
-                <Skeleton width={100} />
-            </SimpleCell>
-        ))}
-    </>
+    [...Array(5)].map((_, i) => (
+        <SimpleCell
+            key={i}
+            before={<Skeleton width={28} height={28} borderRadius="15%" />}
+            subtitle={<Skeleton width={140} />}
+        >
+            <Skeleton width={100} />
+        </SimpleCell>
+    ))
 );
 
 const DetailsGroup = ({ profile, interests }: DetailsProps) => {

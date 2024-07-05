@@ -28,47 +28,37 @@ const HeaderCompoment = ({ profiles, t }: HeaderCompoment) => (
 );
 
 const SkeletonComponent = () => (
-    <>
-        {[...Array(5)].map((_, i) => (
-            <SimpleCell
-                key={i}
-                before={<Skeleton width={48} height={48} borderRadius="50%" />}
-                subtitle={<Skeleton width={75} />}
-            >
-                <Skeleton width={100} />
-            </SimpleCell>
-        ))}
-    </>
+    [...Array(5)].map((_, i) => (
+        <SimpleCell
+            key={i}
+            before={<Skeleton width={48} height={48} borderRadius="50%" />}
+            subtitle={<Skeleton width={75} />}
+        >
+            <Skeleton width={100} />
+        </SimpleCell>
+    ))
 );
 
 const AvatarComponent = ({ profile }: AvatarProps) => (
-    <>
-        {
-            profile?.avatar ?
-                <Avatar size={48} src={profile?.avatar} /> :
-                <Avatar size={48} src="#" initials={profile.displayName.slice(0, 1)} />
-        }
-    </>
+    profile?.avatar ?
+        <Avatar size={48} src={profile?.avatar} /> :
+        <Avatar size={48} src="#" initials={profile.displayName.slice(0, 1)} />
 );
 
 const CellComponent = ({ profiles, t }: CellComponentProps) => (
-    <>
-        {
-            profiles?.map((profile, index) => (
-                <Link
-                    key={index}
-                    href={`/profile/${profile.id}`}
-                >
-                    <SimpleCell
-                        before={<AvatarComponent profile={profile} />}
-                        subtitle={formatLocation(profile, t)}
-                    >
-                        {profile?.displayName}
-                    </SimpleCell>
-                </Link>
-            ))
-        }
-    </>
+    profiles?.map((profile, index) => (
+        <Link
+            key={index}
+            href={`/profile/${profile.id}`}
+        >
+            <SimpleCell
+                before={<AvatarComponent profile={profile} />}
+                subtitle={formatLocation(profile, t)}
+            >
+                {profile?.displayName}
+            </SimpleCell>
+        </Link>
+    ))
 );
 
 const Nearby = ({ profiles }: NearbyProps) => {

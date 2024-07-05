@@ -6,11 +6,14 @@ import ApiService, { Interest, ProfileDetails } from '@/api';
 import { useLaunchParams } from '@tma.js/sdk-react';
 import { useTranslation } from 'react-i18next';
 
-import { CellButton, Group, PullToRefresh } from "@vkontakte/vkui";
+import Main from "@/components/settings/main"
+
+import { Group, PullToRefresh } from "@vkontakte/vkui";
+
 import ErrorSnackbar from '@/components/ErrorSnackbar';
-import { Icon28CompassOutline, Icon28GhostOutline, Icon28ListAddOutline, Icon28MagicHatOutline, Icon28MasksOutline, Icon28WriteOutline } from '@vkontakte/icons';
 
 export default function Settings() {
+    const { t } = useTranslation();
     const initData = useLaunchParams().initDataRaw;
 
     const [snackbar, setSnackbar] = useState<React.JSX.Element | null>(null);
@@ -66,64 +69,13 @@ export default function Settings() {
         };
     }, [fetchError]);
 
-    const { t } = useTranslation();
-
     return (
         <>
             <PullToRefresh onRefresh={onRefresh} isFetching={fetching}>
-                <Group>
-                    <Group mode="plain">
-                        <CellButton
-                            indicator={profile?.displayName}
-                            before={<Icon28MasksOutline />}
-                            onClick={() => { }}
-                        >
-                            {t("Display name")}
-                        </CellButton>
-                        <CellButton
-                            indicator={profile?.description}
-                            before={<Icon28ListAddOutline />}
-                            onClick={() => { }}
-                        >
-                            {t("Bio")}
-                        </CellButton>
-                        <CellButton
-                            indicator={profile?.visible ? `${t("Visible")} 😋` : `${t("Hidden")} 😎`}
-                            before={<Icon28GhostOutline />}
-                            onClick={() => { }}
-                        >
-                            {t("Visible")}
-                        </CellButton>
-                        <CellButton
-                            indicator={[profile?.country, profile?.city].join(", ")}
-                            before={<Icon28CompassOutline />}
-                            onClick={() => { }}
-                        >
-                            {t("Location")}
-                        </CellButton>
-                        <CellButton
-                            indicator={profile?.personality}
-                            before={<Icon28MagicHatOutline />}
-                            onClick={() => { }}
-                        >
-                            {t("Personality")}
-                        </CellButton>
-                    </Group>
-                    <Group mode="plain">
-                        <CellButton
-                            indicator={interests?.length}
-                            before={<Icon28WriteOutline />}
-                            onClick={() => { }}
-                        >
-                            {t("Interests")}
-                        </CellButton>
-                    </Group>
-                </Group>
-
+                <Main profile={profile} interests={interests} />
                 <Group
                     description={t("Settings description")}
-                    mode="plain"
-                >
+                    mode="plain">
                 </Group>
             </PullToRefresh>
             {snackbar}

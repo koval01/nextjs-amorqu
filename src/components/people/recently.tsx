@@ -17,37 +17,29 @@ const HeaderCompoment = ({ profiles }: RecentlyProps) => {
 }
 
 const SkeletonComponent = () => (
-    <>
-        {[...Array(5)].map((_, i) => (
-            <HorizontalCell key={i} header={
-                // @ts-ignore
-                <Skeleton width={48} />
-            }>
-                {/* @ts-ignore */}
-                <Skeleton width={56} height={56} borderRadius="50%" />
-            </HorizontalCell>
-        ))}
-    </>
+    [...Array(5)].map((_, i) => (
+        <HorizontalCell key={i} header={
+            // @ts-ignore
+            <Skeleton width={48} />
+        }>
+            {/* @ts-ignore */}
+            <Skeleton width={56} height={56} borderRadius="50%" />
+        </HorizontalCell>
+    ))
 );
 
 const ProfileAvatar = ({ profile }: { profile: ProfileNear }) => (
-    <>
-        {
-            profile?.avatar ?
-                <Avatar size={56} src={profile?.avatar} /> :
-                <Avatar size={56} src="#" initials={profile.displayName.slice(0, 1)} />
-        }
-    </>
+    profile?.avatar ?
+        <Avatar size={56} src={profile?.avatar} /> :
+        <Avatar size={56} src="#" initials={profile.displayName.slice(0, 1)} />
 );
 
 const ProfileComponent = ({ profiles }: RecentlyProps) => (
-    <>
-        {profiles?.map((profile, index) => (
-            <HorizontalCell onClick={() => { }} key={index} header={profile.displayName}>
-                <ProfileAvatar profile={profile} />
-            </HorizontalCell>
-        ))}
-    </>
+    profiles?.map((profile, index) => (
+        <HorizontalCell onClick={() => { }} key={index} header={profile.displayName}>
+            <ProfileAvatar profile={profile} />
+        </HorizontalCell>
+    ))
 )
 
 const Recently = ({ profiles }: RecentlyProps) => (
