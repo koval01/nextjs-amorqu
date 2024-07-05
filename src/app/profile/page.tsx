@@ -12,8 +12,6 @@ import Main from '@/components/profile/main';
 import Details from '@/components/profile/details';
 import Gallery from '@/components/profile/gallery';
 
-export const runtime = 'edge';
-
 export default function Porfile() {
     const initData = useLaunchParams().initDataRaw;
 
