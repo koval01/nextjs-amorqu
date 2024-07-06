@@ -59,7 +59,7 @@ export default function Settings() {
             console.error('Error during data updating', error);
             setFetchError(true);
         } finally {
-            if (!fetchError) fetch();
+            if (!fetchError) await fetchWait();
         }
     }
 
@@ -67,6 +67,12 @@ export default function Settings() {
         setFetching(true);
         fetchProfileData().then(() => setFetching(false));
     };
+
+    const fetchWait = async () => {
+        setFetching(true);
+        await fetchProfileData();
+        setFetching(false);
+    }
 
     useEffect(() => fetch(), []);
     const onRefresh = useCallback(() => fetch(), []);
