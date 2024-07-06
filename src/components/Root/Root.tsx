@@ -70,8 +70,10 @@ function App(props: PropsWithChildren) {
       platform={['macos', 'ios'].includes(lp.platform) ? 'ios' : 'android'}
     >
       <AdaptivityProvider>
-        <AppRoot className="select-none">
-          {props.children}
+        <AppRoot>
+          <div className="select-none">
+            {props.children}
+          </div>
         </AppRoot>
       </AdaptivityProvider>
     </ConfigProvider>
