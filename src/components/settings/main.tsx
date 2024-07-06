@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 import { ProfileDetails, Interest, UpdateProfileProps } from "@/api";
 
 import { Icon28CompassOutline, Icon28GhostOutline, Icon28ListAddOutline, Icon28MagicHatOutline, Icon28MasksOutline, Icon28WriteOutline, Icon36ChevronRightOutline } from "@vkontakte/icons";
-import { CellButton, SimpleCell, Group, Switch } from "@vkontakte/vkui";
+import { CellButton, SimpleCell, Group, Switch, FormItem, Input } from "@vkontakte/vkui";
 
 import Skeleton from "./skeleton";
 import Modal from "./modal";
@@ -17,28 +17,65 @@ interface LocalizationProps {
 interface OnUpdateProfileProps {
     onUpdateProfileData: (profile: Partial<UpdateProfileProps>) => Promise<void>;
 }
-interface OnOpenModalProps {
-    onOpenModal: () => void;
+interface SetPopoutProps {
+    setPopout: Dispatch<SetStateAction<JSX.Element | null>>;
 }
-interface FirstBlockProps extends LocalizationProps, OnUpdateProfileProps, OnOpenModalProps {
+interface FirstBlockProps extends LocalizationProps, OnUpdateProfileProps, SetPopoutProps {
     profile: ProfileDetails | null;
 }
-interface SecondBlockProps extends LocalizationProps, OnOpenModalProps {
+interface SecondBlockProps extends LocalizationProps, SetPopoutProps {
     interests: Interest[] | null;
 }
 interface MainProps extends OnUpdateProfileProps {
     profile: ProfileDetails | null;
     interests: Interest[] | null;
 }
+interface ModalDisplayNameProps {
+    profile: ProfileDetails | null;
+    setPopout: (value: SetStateAction<JSX.Element | null>) => void;
+    onUpdate: (profile: Partial<UpdateProfileProps>, setWait: Dispatch<SetStateAction<boolean>>) => Promise<void>;
+}
 
-const FirstBlock = ({ profile, t, onUpdateProfileData, onOpenModal }: FirstBlockProps) => {
+const ModalDisplayName = ({ profile, setPopout, onUpdate }: ModalDisplayNameProps) => {
+    const [wait, setWait] = useState<boolean>(false);
+    const [displayName, setDisplayName] = useState<string>(profile?.displayName || "");
+
+    return (
+        <Modal
+            header={"Display name"}
+            subheader={"Display name subhead"}
+            content={
+                <FormItem>
+                    <Input
+                        type="text"
+                        defaultValue={profile?.displayName}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDisplayName(e.target.value.trim())}
+                        disabled={wait}
+                    />
+                </FormItem>
+            }
+            onClose={() => setPopout(null)}
+            onUpdate={() => onUpdate({ displayName: displayName }, setWait).then(() => setPopout(null))}
+            disabled={wait}
+        />
+    )
+}
+
+const FirstBlock = ({ profile, t, onUpdateProfileData, setPopout }: FirstBlockProps) => {
     const [wait, setWait] = useState<boolean>(false);
 
-    const onUpdate = async (e: any) => {
+    const onUpdate = async (profile: Partial<UpdateProfileProps>, setWait: Dispatch<SetStateAction<boolean>>) => {
         setWait(true);
-        await onUpdateProfileData({ visible: e.target.checked });
+        await onUpdateProfileData(profile);
         setWait(false);
     }
+
+    const onOpenModalDisplayName = () => setPopout(
+        <ModalDisplayName 
+            profile={profile} 
+            setPopout={setPopout} 
+            onUpdate={onUpdate} />
+    );
 
     return (
         <>
@@ -46,7 +83,7 @@ const FirstBlock = ({ profile, t, onUpdateProfileData, onOpenModal }: FirstBlock
                 indicator={profile?.displayName}
                 before={<Icon28MasksOutline />}
                 after={<Icon36ChevronRightOutline />}
-                onClick={() => onOpenModal()}
+                onClick={() => onOpenModalDisplayName()}
             >
                 {t("Display name")}
             </CellButton>
@@ -54,14 +91,19 @@ const FirstBlock = ({ profile, t, onUpdateProfileData, onOpenModal }: FirstBlock
                 indicator={profile?.description}
                 before={<Icon28ListAddOutline />}
                 after={<Icon36ChevronRightOutline />}
-                onClick={() => onOpenModal()}
+                onClick={() => { }}
             >
                 {t("Bio")}
             </CellButton>
             <SimpleCell
                 indicator={profile?.visible ? `${t("Visible")} 😋` : `${t("Hidden")} 😎`}
                 before={<Icon28GhostOutline />}
-                after={<Switch defaultChecked={profile?.visible} onChange={(e: any) => onUpdate(e)} disabled={wait} />}
+                after={
+                    <Switch 
+                        defaultChecked={profile?.visible} 
+                        onChange={(e: any) => onUpdate({ visible: e.target.checked }, setWait)} 
+                        disabled={wait} />
+                }
             >
                 {t("Visible")}
             </SimpleCell>
@@ -69,7 +111,7 @@ const FirstBlock = ({ profile, t, onUpdateProfileData, onOpenModal }: FirstBlock
                 indicator={[profile?.country, profile?.city].join(", ")}
                 before={<Icon28CompassOutline />}
                 after={<Icon36ChevronRightOutline />}
-                onClick={() => onOpenModal()}
+                onClick={() => { }}
             >
                 {t("Location")}
             </CellButton>
@@ -77,7 +119,7 @@ const FirstBlock = ({ profile, t, onUpdateProfileData, onOpenModal }: FirstBlock
                 indicator={profile?.personality}
                 before={<Icon28MagicHatOutline />}
                 after={<Icon36ChevronRightOutline />}
-                onClick={() => onOpenModal()}
+                onClick={() => { }}
             >
                 {t("Personality")}
             </CellButton>
@@ -85,13 +127,13 @@ const FirstBlock = ({ profile, t, onUpdateProfileData, onOpenModal }: FirstBlock
     )
 }
 
-const SecondBlock = ({ interests, t, onOpenModal }: SecondBlockProps) => (
+const SecondBlock = ({ interests, t, setPopout }: SecondBlockProps) => (
     <>
         <CellButton
             indicator={interests?.length}
             before={<Icon28WriteOutline />}
             after={<Icon36ChevronRightOutline />}
-            onClick={() => onOpenModal()}
+            onClick={() => { }}
         >
             {t("Interests")}
         </CellButton>
@@ -103,28 +145,26 @@ const Main = ({ profile, interests, onUpdateProfileData }: MainProps) => {
 
     const [popout, setPopout] = useState<React.JSX.Element | null>(null);
 
-    const onOpenModal = () => setPopout(<Modal onClose={() => setPopout(null)} />);
-
     return (
         <>
             <Group>
                 <Group mode="plain">
-                    {!profile ? 
-                        <Skeleton count={5} /> : 
-                        <FirstBlock 
-                            profile={profile} 
-                            t={t} 
-                            onUpdateProfileData={onUpdateProfileData} 
-                            onOpenModal={onOpenModal} />
+                    {!profile ?
+                        <Skeleton count={5} /> :
+                        <FirstBlock
+                            profile={profile}
+                            t={t}
+                            onUpdateProfileData={onUpdateProfileData}
+                            setPopout={setPopout} />
                     }
                 </Group>
                 <Group mode="plain">
-                    {!interests ? 
-                        <Skeleton count={1} /> : 
-                        <SecondBlock 
-                            interests={interests} 
-                            t={t} 
-                            onOpenModal={onOpenModal} />
+                    {!interests ?
+                        <Skeleton count={1} /> :
+                        <SecondBlock
+                            interests={interests}
+                            t={t}
+                            setPopout={setPopout} />
                     }
                 </Group>
             </Group>

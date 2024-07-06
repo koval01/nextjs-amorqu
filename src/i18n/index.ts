@@ -5,7 +5,8 @@ import { menu } from "./menu";
 export const i18nStrings = {
     "en": {
         "translation": {
-            "Settings description": "You can always delete all the data you give us by submitting a profile deletion request or through technical support."
+            "Settings description": "You can always delete all the data you give us by submitting a profile deletion request or through technical support.",
+            "Display name subhead": "This is the name that all users will see, we recommend using your own name or an alias for example.",
         }
     },
     "ru": {
@@ -24,10 +25,12 @@ export const i18nStrings = {
             "nothing": "ничего",
             "here": "здесь",
             "now": "сейчас",
+            "Display name": "Отображаемое имя",
             ...countries["ru"].translation,
             ...cities["ru"].translation,
             ...menu["ru"].translation,
-            "Settings description": "Все данные которые вы нам передаете вы всегда можете удалить отправив запрос на удаление профиля или через техническую поддержку."
+            "Settings description": "Все данные которые вы нам передаете вы всегда можете удалить отправив запрос на удаление профиля или через техническую поддержку.",
+            "Display name subhead": "Это имя которое будут видеть все пользователи, рекомендуем использовать собственное имя или к примеру псевдоним.",
         }
     },
     "uk": {
@@ -46,10 +49,12 @@ export const i18nStrings = {
             "nothing": "нічого",
             "here": "тут",
             "now": "зараз",
+            "Display name": "Відображуване ім'я",
             ...countries["uk"].translation,
             ...cities["uk"].translation,
             ...menu["uk"].translation,
-            "Settings description": "Всі дані які ви нам передаєте ви завжди можете видалити відправивши запит на видалення профілю або через технічну підтримку."
+            "Settings description": "Всі дані які ви нам передаєте ви завжди можете видалити відправивши запит на видалення профілю або через технічну підтримку.",
+            "Display name subhead": "Це ім'я, яке бачитимуть усі користувачі, рекомендуємо використовувати власне ім'я або, наприклад, псевдонім.",
         }
     }
 }

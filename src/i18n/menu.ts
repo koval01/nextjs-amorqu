@@ -8,7 +8,8 @@ export const menu = {
             "Back": "Назад",
             "Pages": "Страницы",
             "Home": "Дом",
-            "Close": "Закрыть"
+            "Close": "Закрыть",
+            "Save": "Сохранить"
         }
     },
     "uk": {
@@ -20,7 +21,8 @@ export const menu = {
             "Back": "Назад",
             "Pages": "Сторінки",
             "Home": "Дім",
-            "Close": "Закрити"
+            "Close": "Закрити",
+            "Save": "Зберегти"
         }
     }
 }
