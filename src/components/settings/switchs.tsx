@@ -1,0 +1,21 @@
+import { Dispatch, SetStateAction, useState } from "react";
+
+import { ProfileDetails, UpdateProfileProps } from "@/api";
+
+import { Switch } from "@vkontakte/vkui";
+
+interface VisibilitySwitch {
+    profile: ProfileDetails | null;
+    onUpdate: (profile: Partial<UpdateProfileProps>, setWait: Dispatch<SetStateAction<boolean>>) => Promise<void>;
+}
+
+export const VisibilitySwitch = ({ profile, onUpdate }: VisibilitySwitch) => {
+    const [wait, setWait] = useState<boolean>(false);
+    
+    return (
+        <Switch
+            defaultChecked={profile?.visible}
+            onChange={(e: any) => onUpdate({ visible: e.target.checked }, setWait)}
+            disabled={wait} />
+    )
+}

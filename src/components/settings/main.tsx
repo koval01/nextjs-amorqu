@@ -2,11 +2,21 @@ import { Dispatch, SetStateAction, useState } from "react";
 
 import { ProfileDetails, Interest, UpdateProfileProps } from "@/api";
 
-import { Icon28CompassOutline, Icon28GhostOutline, Icon28ListAddOutline, Icon28MagicHatOutline, Icon28MasksOutline, Icon28WriteOutline, Icon36ChevronRightOutline } from "@vkontakte/icons";
-import { CellButton, SimpleCell, Group, Switch, FormItem, Input } from "@vkontakte/vkui";
+import { 
+    Icon28CompassOutline, 
+    Icon28GhostOutline, 
+    Icon28ListAddOutline,
+    Icon28MagicHatOutline, 
+    Icon28MasksOutline, 
+    Icon28WriteOutline, 
+    Icon36ChevronRightOutline 
+} from "@vkontakte/icons";
+import { CellButton, SimpleCell, Group } from "@vkontakte/vkui";
 
 import Skeleton from "./skeleton";
-import Modal from "./modal";
+
+import { VisibilitySwitch } from "./switchs";
+import { ModalDisplayName } from "./modals";
 
 import { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
@@ -30,52 +40,13 @@ interface MainProps extends OnUpdateProfileProps {
     profile: ProfileDetails | null;
     interests: Interest[] | null;
 }
-interface ModalDisplayNameProps {
-    profile: ProfileDetails | null;
-    setPopout: (value: SetStateAction<JSX.Element | null>) => void;
-    onUpdate: (profile: Partial<UpdateProfileProps>, setWait: Dispatch<SetStateAction<boolean>>) => Promise<void>;
-}
-
-const ModalDisplayName = ({ profile, setPopout, onUpdate }: ModalDisplayNameProps) => {
-    const [wait, setWait] = useState<boolean>(false);
-    const [displayName, setDisplayName] = useState<string>(profile?.displayName || "");
-
-    return (
-        <Modal
-            header={"Display name"}
-            subheader={"Display name subhead"}
-            content={
-                <FormItem>
-                    <Input
-                        type="text"
-                        defaultValue={profile?.displayName}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDisplayName(e.target.value.trim())}
-                        disabled={wait}
-                    />
-                </FormItem>
-            }
-            onClose={() => setPopout(null)}
-            onUpdate={() => onUpdate({ displayName: displayName }, setWait).then(() => setPopout(null))}
-            disabled={wait}
-        />
-    )
-}
 
 const FirstBlock = ({ profile, t, onUpdateProfileData, setPopout }: FirstBlockProps) => {
-    const [wait, setWait] = useState<boolean>(false);
-
-    const onUpdate = async (profile: Partial<UpdateProfileProps>, setWait: Dispatch<SetStateAction<boolean>>) => {
+    const onUpdateProfile = async (profile: Partial<UpdateProfileProps>, setWait: Dispatch<SetStateAction<boolean>>) => {
         setWait(true);
         await onUpdateProfileData(profile);
         setWait(false);
     }
-
-    const onOpenModalDisplayName = () => setPopout(
-        <ModalDisplayName 
-            profile={profile} 
-            setPopout={setPopout} 
-            onUpdate={onUpdate} />
-    );
 
     return (
         <>
@@ -83,7 +54,12 @@ const FirstBlock = ({ profile, t, onUpdateProfileData, setPopout }: FirstBlockPr
                 indicator={profile?.displayName}
                 before={<Icon28MasksOutline />}
                 after={<Icon36ChevronRightOutline />}
-                onClick={() => onOpenModalDisplayName()}
+                onClick={() => setPopout(
+                    <ModalDisplayName
+                        profile={profile}
+                        setPopout={setPopout}
+                        onUpdate={onUpdateProfile} />
+                )}
             >
                 {t("Display name")}
             </CellButton>
@@ -98,12 +74,7 @@ const FirstBlock = ({ profile, t, onUpdateProfileData, setPopout }: FirstBlockPr
             <SimpleCell
                 indicator={profile?.visible ? `${t("Visible")} 😋` : `${t("Hidden")} 😎`}
                 before={<Icon28GhostOutline />}
-                after={
-                    <Switch 
-                        defaultChecked={profile?.visible} 
-                        onChange={(e: any) => onUpdate({ visible: e.target.checked }, setWait)} 
-                        disabled={wait} />
-                }
+                after={<VisibilitySwitch profile={profile} onUpdate={onUpdateProfile} />}
             >
                 {t("Visible")}
             </SimpleCell>
