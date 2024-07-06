@@ -24,7 +24,6 @@ const Modal = ({ header, subheader, content, icon, onClose, onUpdate, disabled }
                 icon={icon}
                 header={t(header)}
                 subheader={t(subheader)}
-                children={content}
                 dismissButtonMode="none"
                 actions={
                     <React.Fragment>
@@ -39,7 +38,9 @@ const Modal = ({ header, subheader, content, icon, onClose, onUpdate, disabled }
                         </ButtonGroup>
                     </React.Fragment>
                 }
-            />
+            >
+                {content}
+            </ModalCardBase>
         </PopoutWrapper>
     );
 }
