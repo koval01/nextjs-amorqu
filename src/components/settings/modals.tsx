@@ -2,18 +2,26 @@ import { Dispatch, SetStateAction, useState } from "react";
 
 import Modal from "./modal";
 
-import { ProfileDetails, UpdateProfileProps } from "@/api";
+import { Interest, ProfileDetails, UpdateProfileProps } from "@/api";
 import { cleanDisplayName } from "@/helpers/string";
 
 import { FormItem, Input, Textarea } from "@vkontakte/vkui";
 
 import { useTranslation } from "react-i18next";
 
-interface ModalDisplayNameProps {
+interface ProfileProp {
     profile: ProfileDetails | null;
+}
+interface InterestsProp {
+    interests: Interest[] | null
+}
+interface BaseModalProps {
     setPopout: (value: SetStateAction<JSX.Element | null>) => void;
     onUpdate: (profile: Partial<UpdateProfileProps>, setWait: Dispatch<SetStateAction<boolean>>) => Promise<boolean | undefined>;
 }
+interface ModalDisplayNameProps extends ProfileProp, BaseModalProps {}
+interface ModalBioProps extends ModalDisplayNameProps, BaseModalProps {};
+interface ModalInterestsProps extends InterestsProp, BaseModalProps {};
 
 export const ModalDisplayName = ({ profile, setPopout, onUpdate }: ModalDisplayNameProps) => {
     const [wait, setWait] = useState<boolean>(false);
@@ -43,7 +51,7 @@ export const ModalDisplayName = ({ profile, setPopout, onUpdate }: ModalDisplayN
     )
 }
 
-export const ModalBio = ({ profile, setPopout, onUpdate }: ModalDisplayNameProps) => {
+export const ModalBio = ({ profile, setPopout, onUpdate }: ModalBioProps) => {
     const { t } = useTranslation();
     
     const [wait, setWait] = useState<boolean>(false);
@@ -67,6 +75,26 @@ export const ModalBio = ({ profile, setPopout, onUpdate }: ModalDisplayNameProps
             }
             onClose={() => setPopout(null)}
             onUpdate={() => onUpdate({ description: bio }, setWait).then((r) => r === false && setPopout(null))}
+            disabled={wait}
+        />
+    )
+}
+
+export const ModalInterests = ({ interests, setPopout, onUpdate }: ModalInterestsProps) => {
+    const [wait, setWait] = useState<boolean>(false);
+    const [interestsState, setInterestsState] = useState<Interest[] | null>(interests);
+
+    return (
+        <Modal
+            header={"Bio"}
+            subheader={"Bio subhead"}
+            content={
+                <FormItem>
+                    
+                </FormItem>
+            }
+            onClose={() => setPopout(null)}
+            onUpdate={() => onUpdate({  }, setWait).then((r) => r === false && setPopout(null))}
             disabled={wait}
         />
     )
