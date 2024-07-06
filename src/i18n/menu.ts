@@ -7,7 +7,8 @@ export const menu = {
             "Settings": "Настройки",
             "Back": "Назад",
             "Pages": "Страницы",
-            "Home": "Дом"
+            "Home": "Дом",
+            "Close": "Закрыть"
         }
     },
     "uk": {
@@ -18,7 +19,8 @@ export const menu = {
             "Settings": "Налаштування",
             "Back": "Назад",
             "Pages": "Сторінки",
-            "Home": "Дім"
+            "Home": "Дім",
+            "Close": "Закрити"
         }
     }
 }
