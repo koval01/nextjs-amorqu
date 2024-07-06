@@ -254,8 +254,8 @@ class ApiService {
         });
     }
 
-    public updateProfile(info: Partial<UpdateProfileProps>): Promise<void> {
-        return this.request<void>({
+    public async updateProfile(info: Partial<UpdateProfileProps>): Promise<ApiResponse<UpdateProfileProps>> {
+        return await this.request<ApiResponse<UpdateProfileProps>>({
             method: 'PUT',
             url: '/profile/me',
             data: info,

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
-import ApiService, { Interest, ProfileDetails } from '@/api';
+import ApiService, { Interest, ProfileDetails, UpdateProfileProps } from '@/api';
 import { useLaunchParams } from '@tma.js/sdk-react';
 import { useTranslation } from 'react-i18next';
 
@@ -29,20 +29,39 @@ export default function Settings() {
     const [fetching, setFetching] = useState<boolean>(false);
     const [fetchError, setFetchError] = useState<boolean>(false);
 
-    const fetchProfileData = async () => {
+    const apiServiceInit = async (): Promise<ApiService | undefined> => {
         if (!initData) return;
+        return await ApiService.create(initData);
+    }
 
-        const apiService = await ApiService.create(initData);
+    const fetchProfileData = async () => {
+        const apiService = await apiServiceInit();
+        if (!apiService) return;
 
         try {
             setProfile(await apiService.getProfileDetails());
             setInterest(await apiService.getProfileInterests());
-            setFetchError(false); // Reset error state if successful
+            setFetchError(false);
         } catch (error) {
             console.error('Error during data fetching', error);
-            setFetchError(true); // Set error state if there's an error
+            setFetchError(true);
         }
     };
+
+    const onUpdateProfileData = async (profile: Partial<UpdateProfileProps>) => {
+        const apiService = await apiServiceInit();
+        if (!apiService) return;
+
+        try {
+            const result = await apiService.updateProfile(profile);
+            setFetchError(JSON.stringify(result) !== JSON.stringify(profile));
+        } catch (error) {
+            console.error('Error during data updating', error);
+            setFetchError(true);
+        } finally {
+            if (!fetchError) fetch();
+        }
+    }
 
     const fetch = () => {
         setFetching(true);
@@ -72,7 +91,7 @@ export default function Settings() {
     return (
         <>
             <PullToRefresh onRefresh={onRefresh} isFetching={fetching}>
-                <Main profile={profile} interests={interests} />
+                <Main profile={profile} interests={interests} onUpdateProfileData={onUpdateProfileData} />
                 <Group
                     description={t("Settings description")}
                     mode="plain">
