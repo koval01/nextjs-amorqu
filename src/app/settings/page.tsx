@@ -54,7 +54,9 @@ export default function Settings() {
 
         try {
             const result = await apiService.updateProfile(profile);
-            setFetchError(JSON.stringify(result) !== JSON.stringify(profile));
+            const r = JSON.stringify(result) !== JSON.stringify(profile);
+            setFetchError(r);
+            return r;
         } catch (error) {
             console.error('Error during data updating', error);
             setFetchError(true);

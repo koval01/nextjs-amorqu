@@ -6,7 +6,7 @@ import { Switch } from "@vkontakte/vkui";
 
 interface VisibilitySwitch {
     profile: ProfileDetails | null;
-    onUpdate: (profile: Partial<UpdateProfileProps>, setWait: Dispatch<SetStateAction<boolean>>) => Promise<void>;
+    onUpdate: (profile: Partial<UpdateProfileProps>, setWait: Dispatch<SetStateAction<boolean>>) => Promise<boolean | undefined>;
 }
 
 export const VisibilitySwitch = ({ profile, onUpdate }: VisibilitySwitch) => {

@@ -11,12 +11,12 @@ import {
     Icon28WriteOutline, 
     Icon36ChevronRightOutline 
 } from "@vkontakte/icons";
-import { CellButton, SimpleCell, Group } from "@vkontakte/vkui";
+import { CellButton, SimpleCell, Group, EllipsisText } from "@vkontakte/vkui";
 
 import Skeleton from "./skeleton";
 
 import { VisibilitySwitch } from "./switchs";
-import { ModalDisplayName } from "./modals";
+import { ModalBio, ModalDisplayName } from "./modals";
 
 import { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
@@ -25,7 +25,7 @@ interface LocalizationProps {
     t: TFunction<"translation", undefined>
 }
 interface OnUpdateProfileProps {
-    onUpdateProfileData: (profile: Partial<UpdateProfileProps>) => Promise<void>;
+    onUpdateProfileData: (profile: Partial<UpdateProfileProps>) => Promise<boolean | undefined>;
 }
 interface SetPopoutProps {
     setPopout: Dispatch<SetStateAction<JSX.Element | null>>;
@@ -44,14 +44,15 @@ interface MainProps extends OnUpdateProfileProps {
 const FirstBlock = ({ profile, t, onUpdateProfileData, setPopout }: FirstBlockProps) => {
     const onUpdateProfile = async (profile: Partial<UpdateProfileProps>, setWait: Dispatch<SetStateAction<boolean>>) => {
         setWait(true);
-        await onUpdateProfileData(profile);
+        const r = await onUpdateProfileData(profile);
         setWait(false);
+        return r;
     }
 
     return (
         <>
             <CellButton
-                indicator={profile?.displayName}
+                indicator={<EllipsisText className="max-w-52">{profile?.displayName}</EllipsisText>}
                 before={<Icon28MasksOutline />}
                 after={<Icon36ChevronRightOutline />}
                 onClick={() => setPopout(
@@ -64,10 +65,15 @@ const FirstBlock = ({ profile, t, onUpdateProfileData, setPopout }: FirstBlockPr
                 {t("Display name")}
             </CellButton>
             <CellButton
-                indicator={profile?.description}
+                indicator={<EllipsisText className="max-w-52">{profile?.description}</EllipsisText>}
                 before={<Icon28ListAddOutline />}
                 after={<Icon36ChevronRightOutline />}
-                onClick={() => { }}
+                onClick={() => setPopout(
+                    <ModalBio
+                        profile={profile}
+                        setPopout={setPopout}
+                        onUpdate={onUpdateProfile} />
+                )}
             >
                 {t("Bio")}
             </CellButton>
@@ -79,7 +85,7 @@ const FirstBlock = ({ profile, t, onUpdateProfileData, setPopout }: FirstBlockPr
                 {t("Visible")}
             </SimpleCell>
             <CellButton
-                indicator={[profile?.country, profile?.city].join(", ")}
+                indicator={<EllipsisText className="max-w-52">{[profile?.country, profile?.city].join(", ")}</EllipsisText>}
                 before={<Icon28CompassOutline />}
                 after={<Icon36ChevronRightOutline />}
                 onClick={() => { }}
