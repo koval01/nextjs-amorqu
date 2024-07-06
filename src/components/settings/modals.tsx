@@ -66,7 +66,7 @@ export const ModalBio = ({ profile, setPopout, onUpdate }: ModalDisplayNameProps
                 </FormItem>
             }
             onClose={() => setPopout(null)}
-            onUpdate={() => onUpdate({ description: bio }, setWait).then((r) => r === false ?? setPopout(null))}
+            onUpdate={() => onUpdate({ description: bio }, setWait).then((r) => r === false && setPopout(null))}
             disabled={wait}
         />
     )
