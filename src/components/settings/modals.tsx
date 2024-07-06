@@ -60,6 +60,8 @@ export const ModalBio = ({ profile, setPopout, onUpdate }: ModalDisplayNameProps
                         defaultValue={profile?.description}
                         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setBio(e.target.value)}
                         disabled={wait}
+                        rows={8}
+                        style={{ height: "auto" }}
                     />
                 </FormItem>
             }
