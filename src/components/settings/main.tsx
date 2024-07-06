@@ -16,7 +16,7 @@ import { CellButton, SimpleCell, Group, EllipsisText } from "@vkontakte/vkui";
 import Skeleton from "./skeleton";
 
 import { VisibilitySwitch } from "./switchs";
-import { ModalBio, ModalDisplayName } from "./modals";
+import { ModalBio, ModalDisplayName, ModalInterests } from "./modals";
 
 import { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
@@ -110,7 +110,13 @@ const SecondBlock = ({ interests, t, setPopout }: SecondBlockProps) => (
             indicator={interests?.length}
             before={<Icon28WriteOutline />}
             after={<Icon36ChevronRightOutline />}
-            onClick={() => { }}
+            onClick={() => setPopout(
+                <ModalInterests
+                    interests={interests}
+                    setPopout={setPopout}
+                    // @ts-ignore
+                    onUpdate={() => {}} />
+            )}
         >
             {t("Interests")}
         </CellButton>
