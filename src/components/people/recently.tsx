@@ -2,6 +2,7 @@ import { ProfileNear } from "@/api";
 
 import { Avatar, Group, Header, HorizontalCell, HorizontalScroll, Skeleton } from "@vkontakte/vkui";
 
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 
 interface RecentlyProps {
@@ -34,13 +35,17 @@ const ProfileAvatar = ({ profile }: { profile: ProfileNear }) => (
         <Avatar size={56} src="#" initials={profile.displayName.slice(0, 1)} />
 );
 
-const ProfileComponent = ({ profiles }: RecentlyProps) => (
-    profiles?.map((profile, index) => (
-        <HorizontalCell onClick={() => { }} key={index} header={profile.displayName}>
-            <ProfileAvatar profile={profile} />
-        </HorizontalCell>
-    ))
-)
+const ProfileComponent = ({ profiles }: RecentlyProps) => {
+    const router = useRouter();
+
+    return (
+        profiles?.map((profile, index) => (
+            <HorizontalCell onClick={() => router.push(`/profile/${profile.id}`)} key={index} header={profile.displayName}>
+                <ProfileAvatar profile={profile} />
+            </HorizontalCell>
+        ))
+    )
+}
 
 const Recently = ({ profiles }: RecentlyProps) => (
     <Group header={<HeaderCompoment profiles={profiles} />}>
