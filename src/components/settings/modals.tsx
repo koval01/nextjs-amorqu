@@ -21,7 +21,8 @@ interface BaseModalProps {
 }
 interface ModalDisplayNameProps extends ProfileProp, BaseModalProps {}
 interface ModalBioProps extends ModalDisplayNameProps, BaseModalProps {};
-interface ModalInterestsProps extends InterestsProp, BaseModalProps {};
+interface _ModalInterestsProps extends InterestsProp, BaseModalProps {};
+type ModalInterestsProps = Omit<_ModalInterestsProps, keyof { onUpdate: any }>
 
 export const ModalDisplayName = ({ profile, setPopout, onUpdate }: ModalDisplayNameProps) => {
     const [wait, setWait] = useState<boolean>(false);
@@ -80,21 +81,20 @@ export const ModalBio = ({ profile, setPopout, onUpdate }: ModalBioProps) => {
     )
 }
 
-export const ModalInterests = ({ interests, setPopout, onUpdate }: ModalInterestsProps) => {
+export const ModalInterests = ({ interests, setPopout }: ModalInterestsProps) => {
     const [wait, setWait] = useState<boolean>(false);
     const [interestsState, setInterestsState] = useState<Interest[] | null>(interests);
 
     return (
         <Modal
-            header={"Bio"}
-            subheader={"Bio subhead"}
+            header={"Interests"}
+            subheader={"Interests subhead"}
             content={
                 <FormItem>
                     
                 </FormItem>
             }
             onClose={() => setPopout(null)}
-            onUpdate={() => onUpdate({  }, setWait).then((r) => r === false && setPopout(null))}
             disabled={wait}
         />
     )

@@ -113,9 +113,7 @@ const SecondBlock = ({ interests, t, setPopout }: SecondBlockProps) => (
             onClick={() => setPopout(
                 <ModalInterests
                     interests={interests}
-                    setPopout={setPopout}
-                    // @ts-ignore
-                    onUpdate={() => {}} />
+                    setPopout={setPopout} />
             )}
         >
             {t("Interests")}

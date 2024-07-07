@@ -10,7 +10,7 @@ interface ModalProps {
     content: React.JSX.Element;
     icon?: React.JSX.Element | null;
     onClose: (e: any) => void;
-    onUpdate: (e: any) => void;
+    onUpdate?: (e: any) => void;
     disabled: boolean;
 }
 
