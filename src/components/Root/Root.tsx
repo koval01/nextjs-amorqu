@@ -101,7 +101,7 @@ function RootInner({ children }: PropsWithChildren) {
   return (
     <SDKProvider acceptCustomStyles debug={debug}>
       <App>
-        <ProgressBar color={"#2688eb"} />
+        <ProgressBar color={"#2688eb"} startPosition={.2} options={{ showSpinner: false }} />
         {children}
       </App>
     </SDKProvider>
