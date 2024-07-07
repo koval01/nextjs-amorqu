@@ -2,7 +2,7 @@ import { ProfileNear } from "@/api";
 
 import { Avatar, Group, Header, HorizontalCell, HorizontalScroll, Skeleton } from "@vkontakte/vkui";
 
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import { useTranslation } from "react-i18next";
 
 interface RecentlyProps {

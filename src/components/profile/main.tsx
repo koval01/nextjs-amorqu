@@ -1,5 +1,5 @@
 import { CSSProperties } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next-nprogress-bar";
 
 import { ProfileDetails } from '@/api';
 

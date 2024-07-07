@@ -15,7 +15,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
             <SplitCol autoSpaced>
                 <Panel className="max-w-[920px] m-auto">
                     <PanelHeader before={<BackButton />}>{t("Profile")}</PanelHeader>
-                    {children}
+                    { children }
                 </Panel>
             </SplitCol>
         </SplitLayout>

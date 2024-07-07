@@ -4,7 +4,7 @@ import { Icon28NewsfeedOutline, Icon28Smiles2Outline, Icon28UserCircleOutline } 
 import { CellButton, Group, Header, Panel, PanelHeader, SplitCol, SplitLayout } from "@vkontakte/vkui";
 
 import { useTranslation } from "react-i18next";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 
 export default function Home() {
   const { t } = useTranslation();

@@ -26,6 +26,8 @@ import { i18nStrings } from "@/i18n";
 import '@/app.css';
 import '@/tailwind.css';
 
+import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
+
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { ErrorPage } from '@/components/ErrorPage';
 import { useTelegramMock } from '@/hooks/useTelegramMock';
@@ -99,6 +101,7 @@ function RootInner({ children }: PropsWithChildren) {
   return (
     <SDKProvider acceptCustomStyles debug={debug}>
       <App>
+        <ProgressBar color={"#2688eb"} />
         {children}
       </App>
     </SDKProvider>
