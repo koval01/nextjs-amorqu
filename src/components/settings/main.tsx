@@ -16,7 +16,7 @@ import { CellButton, SimpleCell, Group, EllipsisText } from "@vkontakte/vkui";
 import Skeleton from "./skeleton";
 
 import { VisibilitySwitch } from "./switchs";
-import { ModalBio, ModalDisplayName, ModalInterests } from "./modals";
+import { ModalBio, ModalDisplayName, ModalInterests, ModalPersonality } from "./modals";
 
 import { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
@@ -93,10 +93,15 @@ const FirstBlock = ({ profile, t, onUpdateProfileData, setPopout }: FirstBlockPr
                 {t("Location")}
             </CellButton>
             <CellButton
-                indicator={profile?.personality}
+                indicator={t(profile?.personality || "Unknown")}
                 before={<Icon28MagicHatOutline />}
                 after={<Icon36ChevronRightOutline />}
-                onClick={() => { }}
+                onClick={() => setPopout(
+                    <ModalPersonality
+                        profile={profile}
+                        setPopout={setPopout}
+                        onUpdate={onUpdateProfile} />
+                )}
             >
                 {t("Personality")}
             </CellButton>

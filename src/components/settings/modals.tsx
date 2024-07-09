@@ -5,7 +5,9 @@ import Modal from "./modal";
 import { Interest, ProfileDetails, UpdateProfileProps } from "@/api";
 import { cleanDisplayName } from "@/helpers/string";
 
-import { FormItem, Input, Textarea } from "@vkontakte/vkui";
+import personalities from "@/defined/personalities";
+
+import { FormItem, Input, Select, Textarea } from "@vkontakte/vkui";
 
 import { useTranslation } from "react-i18next";
 
@@ -20,7 +22,8 @@ interface BaseModalProps {
     onUpdate: (profile: Partial<UpdateProfileProps>, setWait: Dispatch<SetStateAction<boolean>>) => Promise<boolean | undefined>;
 }
 interface ModalDisplayNameProps extends ProfileProp, BaseModalProps {}
-interface ModalBioProps extends ModalDisplayNameProps, BaseModalProps {};
+interface ModalBioProps extends ProfileProp, BaseModalProps {};
+interface ModalPersonalityProps extends ProfileProp, BaseModalProps { };
 interface _ModalInterestsProps extends InterestsProp, BaseModalProps {};
 type ModalInterestsProps = Omit<_ModalInterestsProps, keyof { onUpdate: any }>
 
@@ -95,6 +98,39 @@ export const ModalInterests = ({ interests, setPopout }: ModalInterestsProps) =>
                 </FormItem>
             }
             onClose={() => setPopout(null)}
+            disabled={wait}
+        />
+    )
+}
+
+export const ModalPersonality = ({ profile, setPopout, onUpdate }: ModalPersonalityProps) => {
+    const { t } = useTranslation();
+    
+    const [wait, setWait] = useState<boolean>(false);
+    const [personality, setPersonality] = useState<string>(profile?.personality || "");
+
+    return (
+        <Modal
+            header={"Personality"}
+            subheader={"Personality subhead"}
+            content={
+                <FormItem>
+                    <Select
+                        id="select-id"
+                        placeholder={t("Not selected")}
+                        options={personalities.map((personality, index) => ({
+                            index: index,
+                            label: `${t(personality)} (${personality})`,
+                            value: personality
+                        }))}
+                        defaultValue={profile?.personality}
+                        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setPersonality(e.target.value)}
+                        disabled={wait}
+                    />
+                </FormItem>
+            }
+            onClose={() => setPopout(null)}
+            onUpdate={() => onUpdate({ personality: personality }, setWait).then((r) => r === false && setPopout(null))}
             disabled={wait}
         />
     )
