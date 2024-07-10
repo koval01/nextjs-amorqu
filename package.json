@@ -7,7 +7,8 @@
     "dev:https": "next dev --experimental-https",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "pnpm next-on-pages && git push origin main"
   },
   "dependencies": {
     "@sentry/nextjs": "^8",
