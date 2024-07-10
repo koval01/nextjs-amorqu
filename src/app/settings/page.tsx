@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
-import ApiService, { Interest, ProfileDetails, UpdateProfileProps } from '@/api';
+import ApiService, { ProfileDetails, UpdateProfileProps } from '@/api';
 import { useLaunchParams } from '@tma.js/sdk-react';
 import { useTranslation } from 'react-i18next';
 
@@ -24,7 +24,7 @@ export default function Settings() {
     };
 
     const [profile, setProfile] = useState<ProfileDetails | null>(null);
-    const [interests, setInterest] = useState<Interest[] | null>(null);
+    const [interests, setInterest] = useState<string[] | null>(null);
 
     const [fetching, setFetching] = useState<boolean>(false);
     const [fetchError, setFetchError] = useState<boolean>(false);

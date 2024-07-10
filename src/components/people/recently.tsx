@@ -6,7 +6,7 @@ import { useRouter } from "next-nprogress-bar";
 import { useTranslation } from "react-i18next";
 
 interface RecentlyProps {
-    profiles: ProfileNear[] | null
+    profiles: ProfileNear[] | undefined
 }
 
 const HeaderCompoment = ({ profiles }: RecentlyProps) => {

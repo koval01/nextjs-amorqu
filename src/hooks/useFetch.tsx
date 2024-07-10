@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import ApiService, { ProfileDetails, ProfilePicture } from '@/api';
+import ApiService, { ProfileDetails, ProfileNear, ProfilePicture } from '@/api';
 import ErrorSnackbar from '@/components/ErrorSnackbar';
 
 interface ApiServiceProps {
     getProfileDetails: () => Promise<ProfileDetails>;
     getProfileById: (id: string) => Promise<ProfileDetails | undefined>;
+    getProfilesNear: () => Promise<ProfileNear[] | undefined>;
     getProfileInterests: () => Promise<string[]>;
     getInterestsByProfileId: (id: string) => Promise<string[]>;
     getProfilePictures: () => Promise<ProfilePicture[]>;
