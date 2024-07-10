@@ -327,13 +327,13 @@ class ApiService {
         });
     }
 
-    public getProfileById(id: string): Promise<ProfileDetails | null> {
+    public getProfileById(id: string): Promise<ProfileDetails | undefined> {
         return this.request<ProfileDetails>({
             method: 'GET',
             url: `/profile/${id}`,
         }).catch(error => {
             if (this.isAxiosError(error) && error.response.data.code === 4) {
-                return null;
+                return void 0;
             }
             throw error;
         });

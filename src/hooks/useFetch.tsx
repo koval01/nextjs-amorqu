@@ -4,8 +4,11 @@ import ErrorSnackbar from '@/components/ErrorSnackbar';
 
 interface ApiServiceProps {
     getProfileDetails: () => Promise<ProfileDetails>;
+    getProfileById: (id: string) => Promise<ProfileDetails | undefined>;
     getProfileInterests: () => Promise<string[]>;
+    getInterestsByProfileId: (id: string) => Promise<string[]>;
     getProfilePictures: () => Promise<ProfilePicture[]>;
+    getPicturesByProfileId: (id: string) => Promise<ProfilePicture[]>;
 }
 
 interface FetchDataConfig<T> {
