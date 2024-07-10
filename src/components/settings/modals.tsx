@@ -8,9 +8,10 @@ import { cleanDisplayName } from "@/helpers/string";
 import personalities from "@/defined/personalities";
 import interestsOptions from "@/defined/interests";
 
-import { ChipsSelect, FormItem, Input, Select, Textarea } from "@vkontakte/vkui";
+import { ChipsSelect, Div, FormItem, Input, Select, Textarea } from "@vkontakte/vkui";
 
 import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 interface ProfileProp {
     profile: ProfileDetails | null;
@@ -24,6 +25,9 @@ interface ProfileOnUpdateProp {
 interface InterestsOnUpdateProp {
     onUpdate: (interests: string[], setWait: Dispatch<SetStateAction<boolean>>) => Promise<boolean | undefined>;
 }
+interface DeleteOnUpdateProp {
+    onUpdate: () => void;
+}
 interface BaseModalProps {
     setPopout: (value: SetStateAction<JSX.Element | null>) => void;
 }
@@ -31,6 +35,7 @@ interface ModalDisplayNameProps extends ProfileProp, BaseModalProps, ProfileOnUp
 interface ModalBioProps extends ProfileProp, BaseModalProps, ProfileOnUpdateProp {};
 interface ModalPersonalityProps extends ProfileProp, BaseModalProps, ProfileOnUpdateProp {};
 interface ModalInterestsProps extends InterestsProp, BaseModalProps, InterestsOnUpdateProp {};
+interface ModalDeleteAccount extends BaseModalProps, DeleteOnUpdateProp {}
 
 export const ModalDisplayName = ({ profile, setPopout, onUpdate }: ModalDisplayNameProps) => {
     const [wait, setWait] = useState<boolean>(false);
@@ -155,6 +160,22 @@ export const ModalPersonality = ({ profile, setPopout, onUpdate }: ModalPersonal
             onClose={() => setPopout(null)}
             onUpdate={() => onUpdate({ personality: personality }, setWait).then((r) => r === false && setPopout(null))}
             disabled={wait}
+        />
+    )
+}
+
+export const ModalDeleteAccount = ({ setPopout, onUpdate }: ModalDeleteAccount) => {
+    const [wait, setWait] = useState<boolean>(false);
+
+    return (
+        <Modal
+            header={"Delete account"}
+            subheader={"Delete account subhead"}
+            content={<Div />}
+            onClose={() => setPopout(null)}
+            onUpdate={() => onUpdate}
+            disabled={wait}
+            actionButtonText={t("Delete")}
         />
     )
 }

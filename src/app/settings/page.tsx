@@ -116,11 +116,11 @@ export default function Settings() {
     return (
         <>
             <PullToRefresh onRefresh={onRefresh} isFetching={fetching}>
-                <Main profile={profile} interests={interests} onUpdateProfileData={onUpdateProfileData} onUpdateInterestsData={onUpdateInterestsData} />
-                <Group
-                    description={t("Settings description")}
-                    mode="plain">
-                </Group>
+                <Main 
+                    profile={profile} 
+                    interests={interests} 
+                    onUpdateProfileData={onUpdateProfileData} 
+                    onUpdateInterestsData={onUpdateInterestsData} />
             </PullToRefresh>
             {snackbar}
         </>

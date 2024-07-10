@@ -12,9 +12,10 @@ interface ModalProps {
     onClose: (e: any) => void;
     onUpdate?: (e: any) => void;
     disabled: boolean;
+    actionButtonText?: string
 }
 
-const Modal = ({ header, subheader, content, icon, onClose, onUpdate, disabled }: ModalProps) => {
+const Modal = ({ header, subheader, content, icon, onClose, onUpdate, disabled, actionButtonText }: ModalProps) => {
     const { t } = useTranslation();
 
     return (
@@ -30,7 +31,7 @@ const Modal = ({ header, subheader, content, icon, onClose, onUpdate, disabled }
                         <Spacing size={16} />
                         <ButtonGroup mode="horizontal" gap="s" stretched>
                             <Button size="l" mode="primary" stretched onClick={onUpdate} disabled={disabled}>
-                                {t("Save")}
+                                {t(actionButtonText || "Save")}
                             </Button>
                             <Button size="l" mode="secondary" stretched onClick={onClose} disabled={disabled}>
                                 {t("Close")}

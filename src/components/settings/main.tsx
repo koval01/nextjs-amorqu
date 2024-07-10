@@ -2,21 +2,22 @@ import { Dispatch, SetStateAction, useState } from "react";
 
 import { ProfileDetails, UpdateProfileProps } from "@/api";
 
-import { 
-    Icon28CompassOutline, 
-    Icon28GhostOutline, 
+import {
+    Icon28CompassOutline,
+    Icon28DeleteOutline,
+    Icon28GhostOutline,
     Icon28ListAddOutline,
-    Icon28MagicHatOutline, 
-    Icon28MasksOutline, 
-    Icon28WriteOutline, 
-    Icon36ChevronRightOutline 
+    Icon28MagicHatOutline,
+    Icon28MasksOutline,
+    Icon28WriteOutline,
+    Icon36ChevronRightOutline
 } from "@vkontakte/icons";
 import { CellButton, SimpleCell, Group, EllipsisText } from "@vkontakte/vkui";
 
 import Skeleton from "./skeleton";
 
 import { VisibilitySwitch } from "./switchs";
-import { ModalBio, ModalDisplayName, ModalInterests, ModalPersonality } from "./modals";
+import { ModalBio, ModalDeleteAccount, ModalDisplayName, ModalInterests, ModalPersonality } from "./modals";
 
 import { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
@@ -24,22 +25,26 @@ import { useTranslation } from "react-i18next";
 interface LocalizationProps {
     t: TFunction<"translation", undefined>
 }
-interface OnUpdateProfileProps {
+interface OnUpdateProfileProp {
     onUpdateProfileData: (profile: Partial<UpdateProfileProps>) => Promise<boolean | undefined>;
 }
-interface OnUpdateInterestsProps {
+interface OnUpdateInterestsProp {
     onUpdateInterestsData: (interests: string[]) => Promise<boolean | undefined>;
+}
+interface onUpdateDeleteAccountActionProp {
+    onUpdateDeleteAccountAction: () => Promise<boolean | undefined>;
 }
 interface SetPopoutProps {
     setPopout: Dispatch<SetStateAction<JSX.Element | null>>;
 }
-interface FirstBlockProps extends LocalizationProps, OnUpdateProfileProps, SetPopoutProps {
+interface FirstBlockProps extends LocalizationProps, OnUpdateProfileProp, SetPopoutProps {
     profile: ProfileDetails | null;
 }
-interface SecondBlockProps extends LocalizationProps, OnUpdateInterestsProps, SetPopoutProps {
+interface SecondBlockProps extends LocalizationProps, OnUpdateInterestsProp, SetPopoutProps {
     interests: string[] | null;
 }
-interface MainProps extends OnUpdateProfileProps, OnUpdateInterestsProps {
+interface ButtonsBlock extends LocalizationProps, onUpdateDeleteAccountActionProp, SetPopoutProps {}
+interface MainProps extends OnUpdateProfileProp, OnUpdateInterestsProp {
     profile: ProfileDetails | null;
     interests: string[] | null;
 }
@@ -120,8 +125,7 @@ const SecondBlock = ({ interests, t, onUpdateInterestsData, setPopout }: SecondB
         return r;
     }
 
-    return(
-    <>
+    return (
         <CellButton
             indicator={interests?.length}
             before={<Icon28WriteOutline />}
@@ -135,9 +139,24 @@ const SecondBlock = ({ interests, t, onUpdateInterestsData, setPopout }: SecondB
         >
             {t("Interests")}
         </CellButton>
-    </>
-)
+    )
 };
+
+const ButtonsBlock = ({ t, setPopout }: ButtonsBlock) => {
+    return (
+        <CellButton
+            onClick={() => setPopout(
+                <ModalDeleteAccount
+                    setPopout={setPopout}
+                    onUpdate={() => { }} />
+            )}
+            before={<Icon28DeleteOutline />}
+            mode="danger"
+        >
+            {t("Delete account")}
+        </CellButton>
+    )
+}
 
 const Main = ({ profile, interests, onUpdateProfileData, onUpdateInterestsData }: MainProps) => {
     const { t } = useTranslation();
@@ -164,6 +183,15 @@ const Main = ({ profile, interests, onUpdateProfileData, onUpdateInterestsData }
                             interests={interests}
                             t={t}
                             onUpdateInterestsData={onUpdateInterestsData}
+                            setPopout={setPopout} />
+                    }
+                </Group>
+                <Group mode="plain" description={t("Settings description")}>
+                    {!profile ?
+                        <Skeleton count={1} /> :
+                        <ButtonsBlock 
+                            t={t} 
+                            onUpdateDeleteAccountAction={async () => { return false; }}
                             setPopout={setPopout} />
                     }
                 </Group>

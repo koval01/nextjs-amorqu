@@ -14,6 +14,7 @@ export const i18nStrings = {
             "Bio placeholder": "I am a 20-year-old full-stack developer from Germany. I love anime and computer games, and I'm a fan of the bratishkinoff streamer.",
             "Interests subhead": "Enter a list of your interests, they will be used to find people similar to your interests.",
             "Personality subhead": "Specify your personality type, it is also taken into account by the recommendation algorithm.",
+            "Delete account subhead": "By deleting your account, you will destroy all records about you in our database. This action is irreversible.",
         }
     },
     "ru": {
@@ -47,7 +48,8 @@ export const i18nStrings = {
             "Bio subhead": "Расскажите о себе, не стесняйтесь",
             "Bio placeholder": "Я 20-летний full-stack разработчик из Германии. Я люблю аниме и компьютерные игры, а также являюсь поклонником стримера bratishkinoff.",
             "Interests subhead": "Укажите список ваших интересов, они будут использоваться для поиска похожих по вашим интересам людей.",
-            "Personality subhead": "Укажите свой тип личности, он также учитывается алгоритмом рекомендаций."
+            "Personality subhead": "Укажите свой тип личности, он также учитывается алгоритмом рекомендаций.",
+            "Delete account subhead": "Удалив свой аккаунт вы уничтожите все записи о себе в нашей базе данных. Это действие необратимо.",
         }
     },
     "uk": {
@@ -81,7 +83,8 @@ export const i18nStrings = {
             "Bio subhead": "Розкажіть про себе, не соромтеся",
             "Bio placeholder": "Я 20-річний full-stack розробник з Німеччини. Я люблю аніме та комп'ютерні ігри, а також є фанатом стрімера bratishkinoff.",
             "Interests subhead": "Вкажіть список ваших інтересів, вони будуть використовуватися для пошуку схожих за вашими інтересами людей.",
-            "Personality subhead": "Вкажіть свій тип особистості, він також враховується алгоритмом рекомендацій."
+            "Personality subhead": "Вкажіть свій тип особистості, він також враховується алгоритмом рекомендацій.",
+            "Delete account subhead": "Видаливши свій обліковий запис ви знищите всі записи про себе в нашій базі даних. Це дія безповоротна.",
         }
     }
 }

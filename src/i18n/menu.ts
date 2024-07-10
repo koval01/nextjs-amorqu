@@ -9,7 +9,9 @@ export const menu = {
             "Pages": "Страницы",
             "Home": "Дом",
             "Close": "Закрыть",
-            "Save": "Сохранить"
+            "Save": "Сохранить",
+            "Delete account": "Удалить аккаунт",
+            "Delete": "Удалить"
         }
     },
     "uk": {
@@ -22,7 +24,9 @@ export const menu = {
             "Pages": "Сторінки",
             "Home": "Дім",
             "Close": "Закрити",
-            "Save": "Зберегти"
+            "Save": "Зберегти",
+            "Delete account": "Видалити акаунт",
+            "Delete": "Видалити"
         }
     }
 }
