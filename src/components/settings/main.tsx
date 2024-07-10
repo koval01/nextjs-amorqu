@@ -27,16 +27,19 @@ interface LocalizationProps {
 interface OnUpdateProfileProps {
     onUpdateProfileData: (profile: Partial<UpdateProfileProps>) => Promise<boolean | undefined>;
 }
+interface OnUpdateInterestsProps {
+    onUpdateInterestsData: (interests: string[]) => Promise<boolean | undefined>;
+}
 interface SetPopoutProps {
     setPopout: Dispatch<SetStateAction<JSX.Element | null>>;
 }
 interface FirstBlockProps extends LocalizationProps, OnUpdateProfileProps, SetPopoutProps {
     profile: ProfileDetails | null;
 }
-interface SecondBlockProps extends LocalizationProps, SetPopoutProps {
+interface SecondBlockProps extends LocalizationProps, OnUpdateInterestsProps, SetPopoutProps {
     interests: string[] | null;
 }
-interface MainProps extends OnUpdateProfileProps {
+interface MainProps extends OnUpdateProfileProps, OnUpdateInterestsProps {
     profile: ProfileDetails | null;
     interests: string[] | null;
 }
@@ -109,7 +112,15 @@ const FirstBlock = ({ profile, t, onUpdateProfileData, setPopout }: FirstBlockPr
     )
 }
 
-const SecondBlock = ({ interests, t, setPopout }: SecondBlockProps) => (
+const SecondBlock = ({ interests, t, onUpdateInterestsData, setPopout }: SecondBlockProps) => {
+    const onUpdateInterests = async (interests: string[], setWait: Dispatch<SetStateAction<boolean>>) => {
+        setWait(true);
+        const r = await onUpdateInterestsData(interests);
+        setWait(false);
+        return r;
+    }
+
+    return(
     <>
         <CellButton
             indicator={interests?.length}
@@ -118,15 +129,17 @@ const SecondBlock = ({ interests, t, setPopout }: SecondBlockProps) => (
             onClick={() => setPopout(
                 <ModalInterests
                     interests={interests}
-                    setPopout={setPopout} />
+                    setPopout={setPopout}
+                    onUpdate={onUpdateInterests} />
             )}
         >
             {t("Interests")}
         </CellButton>
     </>
-);
+)
+};
 
-const Main = ({ profile, interests, onUpdateProfileData }: MainProps) => {
+const Main = ({ profile, interests, onUpdateProfileData, onUpdateInterestsData }: MainProps) => {
     const { t } = useTranslation();
 
     const [popout, setPopout] = useState<React.JSX.Element | null>(null);
@@ -150,6 +163,7 @@ const Main = ({ profile, interests, onUpdateProfileData }: MainProps) => {
                         <SecondBlock
                             interests={interests}
                             t={t}
+                            onUpdateInterestsData={onUpdateInterestsData}
                             setPopout={setPopout} />
                     }
                 </Group>

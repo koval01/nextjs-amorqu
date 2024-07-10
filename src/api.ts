@@ -288,18 +288,11 @@ class ApiService {
         });
     }
 
-    public createProfileInterest(interest: string): Promise<string> {
+    public updateProfileInterests(interests: string[]): Promise<string> {
         return this.request<string>({
             method: 'POST',
             url: '/profile/me/interest',
-            data: { interest },
-        });
-    }
-
-    public deleteProfileInterest(interestId: string): Promise<void> {
-        return this.request<void>({
-            method: 'DELETE',
-            url: `/profile/me/interest/${interestId}`,
+            data: interests,
         });
     }
 

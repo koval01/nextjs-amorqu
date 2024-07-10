@@ -64,6 +64,23 @@ export default function Settings() {
             if (!fetchError) await fetchWait();
         }
     }
+    
+    const onUpdateInterestsData = async (interests: string[]) => {
+        const apiService = await apiServiceInit();
+        if (!apiService) return;
+
+        try {
+            const result = await apiService.updateProfileInterests(interests);
+            const r = JSON.stringify(result) !== JSON.stringify(interests);
+            setFetchError(r);
+            return r;
+        } catch (error) {
+            console.error('Error during data updating', error);
+            setFetchError(true);
+        } finally {
+            if (!fetchError) await fetchWait();
+        }
+    }
 
     const fetch = () => {
         setFetching(true);
@@ -99,7 +116,7 @@ export default function Settings() {
     return (
         <>
             <PullToRefresh onRefresh={onRefresh} isFetching={fetching}>
-                <Main profile={profile} interests={interests} onUpdateProfileData={onUpdateProfileData} />
+                <Main profile={profile} interests={interests} onUpdateProfileData={onUpdateProfileData} onUpdateInterestsData={onUpdateInterestsData} />
                 <Group
                     description={t("Settings description")}
                     mode="plain">

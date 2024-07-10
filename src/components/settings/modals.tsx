@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
 
 import Modal from "./modal";
 
@@ -6,8 +6,9 @@ import { ProfileDetails, UpdateProfileProps } from "@/api";
 import { cleanDisplayName } from "@/helpers/string";
 
 import personalities from "@/defined/personalities";
+import interestsOptions from "@/defined/interests";
 
-import { FormItem, Input, Select, Textarea } from "@vkontakte/vkui";
+import { ChipsSelect, FormItem, Input, Select, Textarea } from "@vkontakte/vkui";
 
 import { useTranslation } from "react-i18next";
 
@@ -17,15 +18,19 @@ interface ProfileProp {
 interface InterestsProp {
     interests: string[] | null
 }
-interface BaseModalProps {
-    setPopout: (value: SetStateAction<JSX.Element | null>) => void;
+interface ProfileOnUpdateProp {
     onUpdate: (profile: Partial<UpdateProfileProps>, setWait: Dispatch<SetStateAction<boolean>>) => Promise<boolean | undefined>;
 }
-interface ModalDisplayNameProps extends ProfileProp, BaseModalProps {}
-interface ModalBioProps extends ProfileProp, BaseModalProps {};
-interface ModalPersonalityProps extends ProfileProp, BaseModalProps { };
-interface _ModalInterestsProps extends InterestsProp, BaseModalProps {};
-type ModalInterestsProps = Omit<_ModalInterestsProps, keyof { onUpdate: any }>
+interface InterestsOnUpdateProp {
+    onUpdate: (interests: string[], setWait: Dispatch<SetStateAction<boolean>>) => Promise<boolean | undefined>;
+}
+interface BaseModalProps {
+    setPopout: (value: SetStateAction<JSX.Element | null>) => void;
+}
+interface ModalDisplayNameProps extends ProfileProp, BaseModalProps, ProfileOnUpdateProp {}
+interface ModalBioProps extends ProfileProp, BaseModalProps, ProfileOnUpdateProp {};
+interface ModalPersonalityProps extends ProfileProp, BaseModalProps, ProfileOnUpdateProp {};
+interface ModalInterestsProps extends InterestsProp, BaseModalProps, InterestsOnUpdateProp {};
 
 export const ModalDisplayName = ({ profile, setPopout, onUpdate }: ModalDisplayNameProps) => {
     const [wait, setWait] = useState<boolean>(false);
@@ -84,9 +89,18 @@ export const ModalBio = ({ profile, setPopout, onUpdate }: ModalBioProps) => {
     )
 }
 
-export const ModalInterests = ({ interests, setPopout }: ModalInterestsProps) => {
+export const ModalInterests = ({ interests, setPopout, onUpdate }: ModalInterestsProps) => {
+    const { t } = useTranslation();
     const [wait, setWait] = useState<boolean>(false);
-    const [interestsState, setInterestsState] = useState<string[] | null>(interests);
+
+    const getArray = (arr: string[] | null) => arr?.map((interest: string) => ({ value: interest, label: t(interest) }));
+
+    const interestsCollection = useMemo(() => {
+        if (!interests) return [];
+        return getArray([...interests, ...interestsOptions]);
+    }, [interests]);
+
+    const [selectedInterests, setSelectedInterests] = useState<{ value: string; label: string; }[] | undefined>(() => getArray(interests));
 
     return (
         <Modal
@@ -94,10 +108,19 @@ export const ModalInterests = ({ interests, setPopout }: ModalInterestsProps) =>
             subheader={"Interests subhead"}
             content={
                 <FormItem>
-                    
+                    <ChipsSelect
+                        id="interests"
+                        value={selectedInterests}
+                        onChange={setSelectedInterests}
+                        options={interestsCollection}
+                        placeholder={t("Nothing selected")}
+                        creatable={t("Add interest")}
+                        disabled={wait}
+                    />
                 </FormItem>
             }
             onClose={() => setPopout(null)}
+            onUpdate={() => onUpdate(selectedInterests?.map(item => item.value) || [], setWait).then((r) => r === false && setPopout(null))}
             disabled={wait}
         />
     )

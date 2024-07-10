@@ -2,6 +2,7 @@ import { countries } from "./countries";
 import { cities } from "./cities";
 import { menu } from "./menu";
 import { personalities } from "./personalities";
+import { interests } from "./interests";
 
 export const i18nStrings = {
     "en": {
@@ -18,6 +19,7 @@ export const i18nStrings = {
     "ru": {
         "translation": {
             ...personalities["ru"].translation,
+            ...interests["ru"].translation,
             ...countries["ru"].translation,
             ...cities["ru"].translation,
             ...menu["ru"].translation,
@@ -38,6 +40,8 @@ export const i18nStrings = {
             "Display name": "Отображаемое имя",
             "Bio": "Биография",
             "Unknown": "Неизвестно",
+            "Nothing selected": "Ничего не выбрано",
+            "Add interest": "Добавить интерес",
             "Settings description": "Все данные которые вы нам передаете вы всегда можете удалить отправив запрос на удаление профиля или через техническую поддержку.",
             "Display name subhead": "Это имя которое будут видеть все пользователи, рекомендуем использовать собственное имя или к примеру псевдоним.",
             "Bio subhead": "Расскажите о себе, не стесняйтесь",
@@ -49,6 +53,7 @@ export const i18nStrings = {
     "uk": {
         "translation": {
             ...personalities["uk"].translation,
+            ...interests["uk"].translation,
             ...countries["uk"].translation,
             ...cities["uk"].translation,
             ...menu["uk"].translation,
@@ -69,6 +74,8 @@ export const i18nStrings = {
             "Display name": "Відображуване ім'я",
             "Bio": "Біографія",
             "Unknown": "Невідомо",
+            "Nothing selected": "Нічого не обрано",
+            "Add interest": "Додати інтерес",
             "Settings description": "Всі дані які ви нам передаєте ви завжди можете видалити відправивши запит на видалення профілю або через технічну підтримку.",
             "Display name subhead": "Це ім'я, яке бачитимуть усі користувачі, рекомендуємо використовувати власне ім'я або, наприклад, псевдонім.",
             "Bio subhead": "Розкажіть про себе, не соромтеся",
