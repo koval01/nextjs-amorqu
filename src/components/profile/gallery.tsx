@@ -9,12 +9,12 @@ import { useTranslation } from 'react-i18next';
 import { i18n, TFunction } from 'i18next';
 
 interface GalleryProps {
-    pictures: ProfilePicture[] | null
-    profile: ProfileDetails | null
+    pictures: ProfilePicture[] | undefined
+    profile: ProfileDetails | undefined
 }
 
 interface GalleryMapProps {
-    pictures: ProfilePicture[] | null
+    pictures: ProfilePicture[] | undefined
     i18n: i18n
     t: TFunction<"translation", undefined>
 }

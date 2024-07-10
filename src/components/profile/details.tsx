@@ -1,4 +1,4 @@
-import { Interest, ProfileDetails } from '@/api';
+import { ProfileDetails } from '@/api';
 
 import { Icon28EditOutline, Icon28MagicHatOutline, Icon28PlaceOutline } from '@vkontakte/icons';
 import { ContentBadge, Group, SimpleCell, Skeleton } from '@vkontakte/vkui';
@@ -7,20 +7,20 @@ import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 
 interface LocationProps {
-    profile: ProfileDetails | null
+    profile: ProfileDetails | undefined
     t: TFunction<"translation", undefined>
 }
 
 interface PersonalityProps extends LocationProps { };
 
 interface InterestsProps {
-    interests: Interest[] | null
+    interests: string[] | undefined
     t: TFunction<"translation", undefined>
 }
 
 interface DetailsProps {
-    profile: ProfileDetails | null
-    interests: Interest[] | null
+    profile: ProfileDetails | undefined
+    interests: string[] | undefined
 }
 
 const Location = ({ profile, t }: LocationProps) => (
@@ -51,7 +51,7 @@ const Interests = ({ interests, t }: InterestsProps) => (
                         mode="primary"
                         capsule={false}
                     >
-                        {interest.interest}
+                        {interest}
                     </ContentBadge>
                 ))}
             </div>

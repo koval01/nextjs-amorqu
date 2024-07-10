@@ -41,11 +41,6 @@ export interface ProfileNear {
     }
 }
 
-export interface Interest {
-    id: string;
-    interest: string;
-}
-
 export interface UpdateProfileProps {
     visible: boolean;
     displayName: string;
@@ -226,8 +221,8 @@ class ApiService {
         });
     }
 
-    public getProfileInterests(): Promise<Interest[]> {
-        return this.request<Interest[]>({
+    public getProfileInterests(): Promise<string[]> {
+        return this.request<string[]>({
             method: 'GET',
             url: '/profile/me/interest',
         });
@@ -293,8 +288,8 @@ class ApiService {
         });
     }
 
-    public createProfileInterest(interest: string): Promise<Interest> {
-        return this.request<Interest>({
+    public createProfileInterest(interest: string): Promise<string> {
+        return this.request<string>({
             method: 'POST',
             url: '/profile/me/interest',
             data: { interest },
@@ -351,8 +346,8 @@ class ApiService {
         });
     }
 
-    public getInterestsByProfileId(id: string): Promise<Interest[]> {
-        return this.request<Interest[]>({
+    public getInterestsByProfileId(id: string): Promise<string[]> {
+        return this.request<string[]>({
             method: 'GET',
             url: `/profile/${id}/interest`,
         });

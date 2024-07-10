@@ -10,7 +10,7 @@ import { TFunction } from 'i18next';
 import { Icon20Verified } from '@vkontakte/icons';
 
 interface MainProps {
-    profile: ProfileDetails | null
+    profile: ProfileDetails | undefined
 }
 
 interface ProfileAvatarProps extends MainProps { };
