@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 
-import { ProfileDetails, Interest, UpdateProfileProps } from "@/api";
+import { ProfileDetails, UpdateProfileProps } from "@/api";
 
 import { 
     Icon28CompassOutline, 
@@ -34,11 +34,11 @@ interface FirstBlockProps extends LocalizationProps, OnUpdateProfileProps, SetPo
     profile: ProfileDetails | null;
 }
 interface SecondBlockProps extends LocalizationProps, SetPopoutProps {
-    interests: Interest[] | null;
+    interests: string[] | null;
 }
 interface MainProps extends OnUpdateProfileProps {
     profile: ProfileDetails | null;
-    interests: Interest[] | null;
+    interests: string[] | null;
 }
 
 const FirstBlock = ({ profile, t, onUpdateProfileData, setPopout }: FirstBlockProps) => {

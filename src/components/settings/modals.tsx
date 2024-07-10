@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 
 import Modal from "./modal";
 
-import { Interest, ProfileDetails, UpdateProfileProps } from "@/api";
+import { ProfileDetails, UpdateProfileProps } from "@/api";
 import { cleanDisplayName } from "@/helpers/string";
 
 import personalities from "@/defined/personalities";
@@ -15,7 +15,7 @@ interface ProfileProp {
     profile: ProfileDetails | null;
 }
 interface InterestsProp {
-    interests: Interest[] | null
+    interests: string[] | null
 }
 interface BaseModalProps {
     setPopout: (value: SetStateAction<JSX.Element | null>) => void;
@@ -86,7 +86,7 @@ export const ModalBio = ({ profile, setPopout, onUpdate }: ModalBioProps) => {
 
 export const ModalInterests = ({ interests, setPopout }: ModalInterestsProps) => {
     const [wait, setWait] = useState<boolean>(false);
-    const [interestsState, setInterestsState] = useState<Interest[] | null>(interests);
+    const [interestsState, setInterestsState] = useState<string[] | null>(interests);
 
     return (
         <Modal
