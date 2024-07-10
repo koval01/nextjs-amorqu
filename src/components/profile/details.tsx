@@ -34,7 +34,7 @@ const Location = ({ profile, t }: LocationProps) => (
 const Personality = ({ profile, t }: PersonalityProps) => (
     profile?.personality ? (
         <SimpleCell before={<Icon28MagicHatOutline />} subtitle={t("Personality")}>
-            {profile?.personality}
+            {t(profile?.personality)}
         </SimpleCell>
     ) : null
 );
