@@ -1,12 +1,12 @@
-import { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useMemo, useState } from "react";
 
 import Modal from "./modal";
 
 import { ProfileDetails, UpdateProfileProps } from "@/api";
 import { cleanDisplayName } from "@/helpers/string";
 
-import personalities from "@/defined/personalities";
-import interestsOptions from "@/defined/interests";
+import { personalities } from "@/defined/personalities";
+import { interests as interestsOptions } from "@/defined/interests";
 
 import { ChipsSelect, Div, FormItem, Input, Select, Textarea } from "@vkontakte/vkui";
 
@@ -98,12 +98,13 @@ export const ModalInterests = ({ interests, setPopout, onUpdate }: ModalInterest
     const { t } = useTranslation();
     const [wait, setWait] = useState<boolean>(false);
 
-    const getArray = (arr: string[] | undefined) => arr?.map((interest: string) => ({ value: interest, label: t(interest) }));
+    const getArray = useCallback((arr: string[] | undefined) =>
+        arr?.map((interest: string) => ({ value: interest, label: t(interest) })), [t]);
 
     const interestsCollection = useMemo(() => {
         if (!interests) return [];
         return getArray([...interests, ...interestsOptions]);
-    }, [interests]);
+    }, [interests, getArray]);
 
     const [selectedInterests, setSelectedInterests] = useState<{ value: string; label: string; }[] | undefined>(() => getArray(interests));
 

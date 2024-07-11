@@ -1,4 +1,4 @@
-export default [
+export const interests = [
     "Traveling",
     "Photography",
     "Cooking",

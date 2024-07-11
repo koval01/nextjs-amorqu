@@ -56,17 +56,17 @@ export function useFetchData<T>(initData: string | undefined, config: FetchDataC
      * 
      * @param {string} message - The message to be displayed in the snackbar.
      */
-    const showErrorSnackbar = (message: string) => {
+    const showErrorSnackbar = useCallback((message: string) => {
         if (!snackbar)
             setSnackbar(<ErrorSnackbar text={message} onClose={() => setSnackbar(null)} />);
-    };
+    }, [snackbar]);
 
     /**
      * Fetch data from the API using the configured fetch functions.
      * 
      * @param {ApiServiceProps} apiService - The API service instance.
      */
-    const fetchData = async (apiService: ApiServiceProps) => {
+    const fetchData = useCallback(async (apiService: ApiServiceProps) => {
         try {
             const results = await Promise.all(
                 Object.entries(config.fetchFunctions).map(async ([key, fetchFunction]) => {
@@ -85,22 +85,22 @@ export function useFetchData<T>(initData: string | undefined, config: FetchDataC
             console.error('Error during data fetching', error);
             setHasFetchError(true);
         }
-    };
+    }, [config.fetchFunctions]);
 
     /**
      * Initiate data fetching process.
      */
     const initiateFetch = useCallback(async () => {
-        if (!initData) 
+        if (!initData)
             return;
 
-        setIsFetching(true); // Block dublication fetch task
+        setIsFetching(true); // Block duplication fetch task
 
         const apiService = await ApiService.create(initData);
         await fetchData(apiService);
 
         setIsFetching(false);
-    }, [initData]);
+    }, [initData, fetchData]);
 
     /**
      * Update a specific piece of data using the configured update functions.
@@ -140,13 +140,13 @@ export function useFetchData<T>(initData: string | undefined, config: FetchDataC
         if (hasFetchError) {
             showErrorSnackbar("Error connecting to the server");
             retryInterval = setInterval(() => initiateFetch(), 3e3);
-        } else if (retryInterval)
+        } else if (retryInterval) 
             clearInterval(retryInterval);
 
         return () => {
             if (retryInterval) clearInterval(retryInterval);
         };
-    }, [hasFetchError, initiateFetch]);
+    }, [hasFetchError, initiateFetch, showErrorSnackbar]);
 
     return {
         data,
