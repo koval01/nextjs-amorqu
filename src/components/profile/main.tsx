@@ -106,6 +106,9 @@ const Main = ({ profile }: MainProps) => {
 
     return (
         <Gradient mode="tint" to="top" style={profileStyles}>
+            <div style={{
+                backgroundImage: `url(${profile?.avatar})`
+            }} className="absolute opacity-25 blur-3xl w-full h-64 bg-contain"></div>
             <ProfileAvatar profile={profile} />
             <ProfileTitle profile={profile} t={t} />
             <ProfileStatus profile={profile} t={t} />
