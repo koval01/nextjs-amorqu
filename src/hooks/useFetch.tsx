@@ -100,7 +100,8 @@ export function useFetchData<T>(initData: string | undefined, config: FetchDataC
         await fetchData(apiService);
 
         setIsFetching(false);
-    }, [initData, fetchData]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initData]);
 
     /**
      * Update a specific piece of data using the configured update functions.
