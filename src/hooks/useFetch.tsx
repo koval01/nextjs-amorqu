@@ -1,5 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import ApiService, { ProfileDetails, ProfileNear, ProfilePicture, UpdateProfileProps } from '@/api';
+
+import ApiService, { 
+    ProfileDetails, 
+    ProfileNear, 
+    ProfilePicture, 
+    UpdateProfileProps } from '@/api';
+
 import ErrorSnackbar from '@/components/ErrorSnackbar';
 
 interface ApiServiceProps {
@@ -26,9 +32,8 @@ export function useFetchData<T>(initData: string | undefined, config: FetchDataC
     const [snackbar, setSnackbar] = useState<React.JSX.Element | null>(null);
 
     const showErrorSnackbar = (message: string) => {
-        if (!snackbar) {
+        if (!snackbar) 
             setSnackbar(<ErrorSnackbar text={message} onClose={() => setSnackbar(null)} />);
-        }
     };
 
     const fetchData = async (apiService: ApiServiceProps) => {
@@ -84,12 +89,9 @@ export function useFetchData<T>(initData: string | undefined, config: FetchDataC
 
         if (hasFetchError) {
             showErrorSnackbar("Error connecting to the server");
-            retryInterval = setInterval(() => {
-                initiateFetch();
-            }, 3000);
-        } else if (retryInterval) {
+            retryInterval = setInterval(() => initiateFetch(), 3e3);
+        } else if (retryInterval) 
             clearInterval(retryInterval);
-        }
 
         return () => {
             if (retryInterval) clearInterval(retryInterval);
