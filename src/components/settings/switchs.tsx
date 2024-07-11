@@ -5,7 +5,7 @@ import { ProfileDetails, UpdateProfileProps } from "@/api";
 import { Switch } from "@vkontakte/vkui";
 
 interface VisibilitySwitch {
-    profile: ProfileDetails | null;
+    profile: ProfileDetails | undefined;
     onUpdate: (profile: Partial<UpdateProfileProps>, setWait: Dispatch<SetStateAction<boolean>>) => Promise<boolean | undefined>;
 }
 

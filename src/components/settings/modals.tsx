@@ -14,10 +14,10 @@ import { useTranslation } from "react-i18next";
 import { t } from "i18next";
 
 interface ProfileProp {
-    profile: ProfileDetails | null;
+    profile: ProfileDetails | undefined;
 }
 interface InterestsProp {
-    interests: string[] | null
+    interests: string[] | undefined
 }
 interface ProfileOnUpdateProp {
     onUpdate: (profile: Partial<UpdateProfileProps>, setWait: Dispatch<SetStateAction<boolean>>) => Promise<boolean | undefined>;
@@ -59,7 +59,7 @@ export const ModalDisplayName = ({ profile, setPopout, onUpdate }: ModalDisplayN
                 </FormItem>
             }
             onClose={() => setPopout(null)}
-            onUpdate={() => onUpdate({ displayName: displayName.trim() }, setWait).then((r) => r === false && setPopout(null))}
+            onUpdate={() => onUpdate({ displayName: displayName.trim() }, setWait).then((r) => !!r && setPopout(null))}
             disabled={wait}
         />
     )
@@ -88,7 +88,7 @@ export const ModalBio = ({ profile, setPopout, onUpdate }: ModalBioProps) => {
                 </FormItem>
             }
             onClose={() => setPopout(null)}
-            onUpdate={() => onUpdate({ description: bio }, setWait).then((r) => r === false && setPopout(null))}
+            onUpdate={() => onUpdate({ description: bio }, setWait).then((r) => !!r && setPopout(null))}
             disabled={wait}
         />
     )
@@ -98,7 +98,7 @@ export const ModalInterests = ({ interests, setPopout, onUpdate }: ModalInterest
     const { t } = useTranslation();
     const [wait, setWait] = useState<boolean>(false);
 
-    const getArray = (arr: string[] | null) => arr?.map((interest: string) => ({ value: interest, label: t(interest) }));
+    const getArray = (arr: string[] | undefined) => arr?.map((interest: string) => ({ value: interest, label: t(interest) }));
 
     const interestsCollection = useMemo(() => {
         if (!interests) return [];
@@ -125,7 +125,7 @@ export const ModalInterests = ({ interests, setPopout, onUpdate }: ModalInterest
                 </FormItem>
             }
             onClose={() => setPopout(null)}
-            onUpdate={() => onUpdate(selectedInterests?.map(item => item.value) || [], setWait).then((r) => r === false && setPopout(null))}
+            onUpdate={() => onUpdate(selectedInterests?.map(item => item.value) || [], setWait).then((r) => !!r && setPopout(null))}
             disabled={wait}
         />
     )
@@ -158,7 +158,7 @@ export const ModalPersonality = ({ profile, setPopout, onUpdate }: ModalPersonal
                 </FormItem>
             }
             onClose={() => setPopout(null)}
-            onUpdate={() => onUpdate({ personality: personality }, setWait).then((r) => r === false && setPopout(null))}
+            onUpdate={() => onUpdate({ personality: personality }, setWait).then((r) => !!r && setPopout(null))}
             disabled={wait}
         />
     )

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import ApiService, { ProfileDetails, ProfileNear, ProfilePicture } from '@/api';
+import ApiService, { ProfileDetails, ProfileNear, ProfilePicture, UpdateProfileProps } from '@/api';
 import ErrorSnackbar from '@/components/ErrorSnackbar';
 
 interface ApiServiceProps {
@@ -10,10 +10,13 @@ interface ApiServiceProps {
     getInterestsByProfileId: (id: string) => Promise<string[]>;
     getProfilePictures: () => Promise<ProfilePicture[]>;
     getPicturesByProfileId: (id: string) => Promise<ProfilePicture[]>;
+    updateProfile: (info: Partial<UpdateProfileProps>) => Promise<Partial<UpdateProfileProps>>;
+    updateProfileInterests: (interests: string[]) => Promise<string[]>;
 }
 
 interface FetchDataConfig<T> {
     fetchFunctions: { [K in keyof T]: (apiService: ApiServiceProps) => Promise<T[K]> };
+    updateFunctions?: { [K in keyof Partial<T>]: (apiService: ApiServiceProps, data: Partial<T[K]>) => Promise<Partial<T[K]>> };
 }
 
 export function useFetchData<T>(initData: string | undefined, config: FetchDataConfig<T>) {
@@ -54,6 +57,24 @@ export function useFetchData<T>(initData: string | undefined, config: FetchDataC
         setIsFetching(false);
     }, [initData]);
 
+    const updateData = async <K extends keyof Partial<T>>(key: K, newData: Partial<T[K]>): Promise<boolean> => {
+        if (!config.updateFunctions || !config.updateFunctions[key]) return false;
+        const apiService = await ApiService.create(initData!);
+        try {
+            const existingData = data[key];
+            const updatedData = await config.updateFunctions[key](apiService, newData);
+            setData((prevData) => ({
+                ...prevData,
+                [key]: { ...existingData, ...updatedData },
+            }));
+            return true;
+        } catch (error) {
+            console.error('Error during data updating', error);
+            setHasFetchError(true);
+            return false;
+        }
+    };
+
     useEffect(() => {
         initiateFetch();
     }, [initiateFetch]);
@@ -81,5 +102,6 @@ export function useFetchData<T>(initData: string | undefined, config: FetchDataC
         hasFetchError,
         snackbar,
         onRefresh: initiateFetch,
+        updateData,
     };
 }

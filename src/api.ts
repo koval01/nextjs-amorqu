@@ -249,8 +249,8 @@ class ApiService {
         });
     }
 
-    public async updateProfile(info: Partial<UpdateProfileProps>): Promise<ApiResponse<UpdateProfileProps>> {
-        return await this.request<ApiResponse<UpdateProfileProps>>({
+    public async updateProfile(info: Partial<UpdateProfileProps>): Promise<UpdateProfileProps> {
+        return await this.request<UpdateProfileProps>({
             method: 'PUT',
             url: '/profile/me',
             data: info,
@@ -288,8 +288,8 @@ class ApiService {
         });
     }
 
-    public updateProfileInterests(interests: string[]): Promise<string> {
-        return this.request<string>({
+    public updateProfileInterests(interests: string[]): Promise<string[]> {
+        return this.request<string[]>({
             method: 'POST',
             url: '/profile/me/interest',
             data: interests,

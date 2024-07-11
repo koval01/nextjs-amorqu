@@ -38,15 +38,15 @@ interface SetPopoutProps {
     setPopout: Dispatch<SetStateAction<JSX.Element | null>>;
 }
 interface FirstBlockProps extends LocalizationProps, OnUpdateProfileProp, SetPopoutProps {
-    profile: ProfileDetails | null;
+    profile: ProfileDetails | undefined;
 }
 interface SecondBlockProps extends LocalizationProps, OnUpdateInterestsProp, SetPopoutProps {
-    interests: string[] | null;
+    interests: string[] | undefined;
 }
 interface ButtonsBlock extends LocalizationProps, onUpdateDeleteAccountActionProp, SetPopoutProps {}
 interface MainProps extends OnUpdateProfileProp, OnUpdateInterestsProp {
-    profile: ProfileDetails | null;
-    interests: string[] | null;
+    profile: ProfileDetails | undefined;
+    interests: string[] | undefined;
 }
 
 const FirstBlock = ({ profile, t, onUpdateProfileData, setPopout }: FirstBlockProps) => {
