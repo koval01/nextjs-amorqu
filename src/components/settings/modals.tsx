@@ -8,7 +8,7 @@ import { cleanDisplayName } from "@/helpers/string";
 import { personalities } from "@/defined/personalities";
 import { interests as interestsOptions } from "@/defined/interests";
 
-import { ChipsSelect, Div, FormItem, Input, Select, Textarea } from "@vkontakte/vkui";
+import { ChipsSelect, CustomSelect, Div, FormItem, Input, Select, Textarea } from "@vkontakte/vkui";
 
 import { useTranslation } from "react-i18next";
 import { t } from "i18next";
@@ -31,11 +31,11 @@ interface DeleteOnUpdateProp {
 interface BaseModalProps {
     setPopout: (value: SetStateAction<JSX.Element | null>) => void;
 }
-interface ModalDisplayNameProps extends ProfileProp, BaseModalProps, ProfileOnUpdateProp {}
-interface ModalBioProps extends ProfileProp, BaseModalProps, ProfileOnUpdateProp {};
-interface ModalPersonalityProps extends ProfileProp, BaseModalProps, ProfileOnUpdateProp {};
-interface ModalInterestsProps extends InterestsProp, BaseModalProps, InterestsOnUpdateProp {};
-interface ModalDeleteAccount extends BaseModalProps, DeleteOnUpdateProp {}
+interface ModalDisplayNameProps extends ProfileProp, BaseModalProps, ProfileOnUpdateProp { }
+interface ModalBioProps extends ProfileProp, BaseModalProps, ProfileOnUpdateProp { };
+interface ModalPersonalityProps extends ProfileProp, BaseModalProps, ProfileOnUpdateProp { };
+interface ModalInterestsProps extends InterestsProp, BaseModalProps, InterestsOnUpdateProp { };
+interface ModalDeleteAccount extends BaseModalProps, DeleteOnUpdateProp { }
 
 export const ModalDisplayName = ({ profile, setPopout, onUpdate }: ModalDisplayNameProps) => {
     const [wait, setWait] = useState<boolean>(false);
@@ -67,7 +67,7 @@ export const ModalDisplayName = ({ profile, setPopout, onUpdate }: ModalDisplayN
 
 export const ModalBio = ({ profile, setPopout, onUpdate }: ModalBioProps) => {
     const { t } = useTranslation();
-    
+
     const [wait, setWait] = useState<boolean>(false);
     const [bio, setBio] = useState<string>(profile?.description || "");
 
@@ -134,7 +134,7 @@ export const ModalInterests = ({ interests, setPopout, onUpdate }: ModalInterest
 
 export const ModalPersonality = ({ profile, setPopout, onUpdate }: ModalPersonalityProps) => {
     const { t } = useTranslation();
-    
+
     const [wait, setWait] = useState<boolean>(false);
     const [personality, setPersonality] = useState<string>(profile?.personality || "");
 
@@ -160,6 +160,54 @@ export const ModalPersonality = ({ profile, setPopout, onUpdate }: ModalPersonal
             }
             onClose={() => setPopout(null)}
             onUpdate={() => onUpdate({ personality: personality }, setWait).then((r) => !!r && setPopout(null))}
+            disabled={wait}
+        />
+    )
+}
+
+export const ModalLocation = ({ profile, setPopout, onUpdate }: ModalBioProps) => {
+    const { t } = useTranslation();
+
+    const [wait, setWait] = useState<boolean>(false);
+    const [country, setCountry] = useState<string>(profile?.country || "");
+    const [city, setCity] = useState<string>(profile?.city || "");
+
+    return (
+        <Modal
+            header={"Location"}
+            subheader={"Location subhead"}
+            content={
+                <>
+                    <FormItem
+                        top={t("Country")}
+                        htmlFor="country-select-searchable"
+                    >
+                        <CustomSelect
+                            placeholder={t("Enter country name")}
+                            searchable
+                            id="country-select-searchable"
+                            options={[{ label: "Germany", value: "Germany" }, { label: "Russia", value: "Russia" }]}
+                            allowClearButton
+                            defaultValue={country}
+                        />
+                    </FormItem>
+                    <FormItem
+                        top={t("City")}
+                        htmlFor="city-select-searchable"
+                    >
+                        <CustomSelect
+                            placeholder={t("Enter city name")}
+                            searchable
+                            id="city-select-searchable"
+                            options={[]}
+                            allowClearButton
+                            defaultValue={city}
+                        />
+                    </FormItem>
+                </>
+            }
+            onClose={() => setPopout(null)}
+            onUpdate={() => onUpdate({ country: country, city: city }, setWait).then((r) => !!r && setPopout(null))}
             disabled={wait}
         />
     )
