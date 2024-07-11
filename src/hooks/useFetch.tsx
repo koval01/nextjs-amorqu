@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 
-import ApiService, { 
-    ProfileDetails, 
-    ProfileNear, 
-    ProfilePicture, 
-    UpdateProfileProps } from '@/api';
+import ApiService, {
+    ProfileDetails,
+    ProfileNear,
+    ProfilePicture,
+    UpdateProfileProps
+} from '@/api';
 
 import ErrorSnackbar from '@/components/ErrorSnackbar';
 
@@ -32,7 +33,7 @@ export function useFetchData<T>(initData: string | undefined, config: FetchDataC
     const [snackbar, setSnackbar] = useState<React.JSX.Element | null>(null);
 
     const showErrorSnackbar = (message: string) => {
-        if (!snackbar) 
+        if (!snackbar)
             setSnackbar(<ErrorSnackbar text={message} onClose={() => setSnackbar(null)} />);
     };
 
@@ -68,9 +69,10 @@ export function useFetchData<T>(initData: string | undefined, config: FetchDataC
         try {
             const existingData = data[key];
             const updatedData = await config.updateFunctions[key](apiService, newData);
+
             setData((prevData) => ({
                 ...prevData,
-                [key]: { ...existingData, ...updatedData },
+                [key]: Array.isArray(updatedData) ? updatedData : { ...existingData, ...updatedData },
             }));
             return true;
         } catch (error) {
@@ -90,7 +92,7 @@ export function useFetchData<T>(initData: string | undefined, config: FetchDataC
         if (hasFetchError) {
             showErrorSnackbar("Error connecting to the server");
             retryInterval = setInterval(() => initiateFetch(), 3e3);
-        } else if (retryInterval) 
+        } else if (retryInterval)
             clearInterval(retryInterval);
 
         return () => {
