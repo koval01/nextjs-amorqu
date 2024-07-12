@@ -93,7 +93,7 @@ const FirstBlock = ({ profile, t, onUpdateProfileData, setPopout }: FirstBlockPr
                 {t("Visible")}
             </SimpleCell>
             <CellButton
-                indicator={<EllipsisText className="max-w-52">{[profile?.country, profile?.city].join(", ")}</EllipsisText>}
+                indicator={<EllipsisText className="max-w-52">{[t(profile?.country || ""), profile?.city].join(", ")}</EllipsisText>}
                 before={<Icon28CompassOutline />}
                 after={<Icon36ChevronRightOutline />}
                 onClick={() => setPopout(

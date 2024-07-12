@@ -7,6 +7,7 @@ import { cleanDisplayName } from "@/helpers/string";
 
 import { personalities } from "@/defined/personalities";
 import { interests as interestsOptions } from "@/defined/interests";
+import { countries } from "@/defined/countries";
 
 import { ChipsSelect, CustomSelect, Div, FormItem, Input, Select, Textarea } from "@vkontakte/vkui";
 
@@ -172,6 +173,9 @@ export const ModalLocation = ({ profile, setPopout, onUpdate }: ModalBioProps) =
     const [country, setCountry] = useState<string>(profile?.country || "");
     const [city, setCity] = useState<string>(profile?.city || "");
 
+    const getArrayCountries = useCallback(() =>
+        countries.map((country: string) => ({ value: country, label: t(country) })), [t]);
+
     return (
         <Modal
             header={"Location"}
@@ -186,9 +190,11 @@ export const ModalLocation = ({ profile, setPopout, onUpdate }: ModalBioProps) =
                             placeholder={t("Enter country name")}
                             searchable
                             id="country-select-searchable"
-                            options={[{ label: "Germany", value: "Germany" }, { label: "Russia", value: "Russia" }]}
+                            options={getArrayCountries()}
                             allowClearButton
                             defaultValue={country}
+                            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCountry(e.target.value)}
+                            disabled={wait}
                         />
                     </FormItem>
                     <FormItem
@@ -202,6 +208,8 @@ export const ModalLocation = ({ profile, setPopout, onUpdate }: ModalBioProps) =
                             options={[]}
                             allowClearButton
                             defaultValue={city}
+                            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setCity(e.target.value)}
+                            disabled={wait}
                         />
                     </FormItem>
                 </>
