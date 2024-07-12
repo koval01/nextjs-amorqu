@@ -23,7 +23,7 @@ interface AvatarProps {
 
 const HeaderCompoment = ({ profiles, t }: HeaderCompoment) => (
     <Header mode="secondary">
-        {!profiles ? <Skeleton width={120} /> : t("Recently joined")}
+        {!profiles ? <Skeleton width={120} /> : t("People are nearby")}
     </Header>
 );
 

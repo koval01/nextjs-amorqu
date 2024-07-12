@@ -8,8 +8,8 @@ const formatLocation = (
     t: TFunction<"translation", undefined>
 ): string => {
     const locArray = [
-        translit(profile?.city, i18next.language),
-        t(profile?.country)
+        t(profile?.country),
+        translit(profile?.city, i18next.language)
     ]
     if (!locArray.every(item => item !== ""))
         return "";
