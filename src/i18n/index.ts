@@ -1,5 +1,4 @@
 import { countries } from "./countries";
-import { cities } from "./cities";
 import { menu } from "./menu";
 import { personalities } from "./personalities";
 import { interests } from "./interests";
@@ -23,7 +22,6 @@ export const i18nStrings = {
             ...personalities["ru"].translation,
             ...interests["ru"].translation,
             ...countries["ru"].translation,
-            ...cities["ru"].translation,
             ...menu["ru"].translation,
             "Edit": "Редактировать",
             "Visible": "Видимый",
@@ -64,7 +62,6 @@ export const i18nStrings = {
             ...personalities["uk"].translation,
             ...interests["uk"].translation,
             ...countries["uk"].translation,
-            ...cities["uk"].translation,
             ...menu["uk"].translation,
             "Edit": "Редагувати",
             "Visible": "Видимий",

@@ -1,13 +1,14 @@
 import { ProfileDetails, ProfileNear } from "@/api";
 
-import { TFunction } from "i18next";
+import i18next, { TFunction } from "i18next";
+import { translit } from "./translit";
 
 const formatLocation = (
     profile: ProfileDetails | ProfileNear,
     t: TFunction<"translation", undefined>
 ): string => {
     const locArray = [
-        t(profile?.city),
+        translit(profile?.city, i18next.language),
         t(profile?.country)
     ]
     if (!locArray.every(item => item !== ""))

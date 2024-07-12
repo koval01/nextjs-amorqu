@@ -19,8 +19,9 @@ import Skeleton from "./skeleton";
 import { VisibilitySwitch } from "./switchs";
 import { ModalBio, ModalDeleteAccount, ModalDisplayName, ModalInterests, ModalLocation, ModalPersonality } from "./modals";
 
-import { TFunction } from "i18next";
+import i18next, { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
+import { translit } from "@/helpers/translit";
 
 interface LocalizationProps {
     t: TFunction<"translation", undefined>
@@ -93,7 +94,9 @@ const FirstBlock = ({ profile, t, onUpdateProfileData, setPopout }: FirstBlockPr
                 {t("Visible")}
             </SimpleCell>
             <CellButton
-                indicator={<EllipsisText className="max-w-52">{[t(profile?.country || ""), profile?.city].join(", ")}</EllipsisText>}
+                indicator={<EllipsisText className="max-w-52">{
+                    [t(profile?.country || ""), translit(profile?.city, i18next.language)].join(", ")
+                }</EllipsisText>}
                 before={<Icon28CompassOutline />}
                 after={<Icon36ChevronRightOutline />}
                 onClick={() => setPopout(

@@ -3,8 +3,9 @@ import { ProfileDetails } from '@/api';
 import { Icon28EditOutline, Icon28MagicHatOutline, Icon28PlaceOutline } from '@vkontakte/icons';
 import { ContentBadge, Group, SimpleCell, Skeleton } from '@vkontakte/vkui';
 
-import { TFunction } from 'i18next';
+import i18next, { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
+import { translit } from '@/helpers/translit';
 
 interface LocationProps {
     profile: ProfileDetails | undefined
@@ -26,7 +27,7 @@ interface DetailsProps {
 const Location = ({ profile, t }: LocationProps) => (
     profile?.country ? (
         <SimpleCell before={<Icon28PlaceOutline />} subtitle={t(profile?.country)}>
-            {t(profile?.city)}
+            {translit(profile?.city, i18next.language)}
         </SimpleCell>
     ) : null
 );
@@ -51,7 +52,7 @@ const Interests = ({ interests, t }: InterestsProps) => (
                         mode="primary"
                         capsule={false}
                     >
-                        {interest}
+                        {t(interest)}
                     </ContentBadge>
                 ))}
             </div>
