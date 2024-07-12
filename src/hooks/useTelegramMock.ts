@@ -33,7 +33,7 @@ export function useTelegramMock(): void {
           first_name: 'Yaroslav',
           last_name: 'Koval',
           username: 'KovalYRS',
-          language_code: 'ru',
+          language_code: 'en',
           allows_write_to_pm: true
         })],
         ['chat_instance', '8498779124332473527'],
