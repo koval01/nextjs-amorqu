@@ -2,7 +2,7 @@ import { Icon32LogoVk } from "@vkontakte/icons";
 import { DisplayTitle, Flex, Footer, Footnote, Link } from "@vkontakte/vkui";
 
 const Logo = () => (
-    <div className="inline-flex align-middle pl-2">
+    <div className="inline-flex align-middle pl-1">
         <Icon32LogoVk className="relative inline-block align-middle bottom-0.5" />
         <DisplayTitle level="2">
             ui
