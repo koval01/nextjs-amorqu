@@ -3,7 +3,6 @@
 import type { PropsWithChildren } from 'react';
 
 import { Panel, PanelHeader, SplitCol, SplitLayout } from '@vkontakte/vkui';
-import BackButton from '@/components/BackButton';
 
 import { useTranslation } from 'react-i18next';
 
