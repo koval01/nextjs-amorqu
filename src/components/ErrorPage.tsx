@@ -13,9 +13,8 @@ export function ErrorPage({
   }, [error]);
 
   return (
-    <div className="p-4 bg-black text-white h-screen">
-      <h1>Amorqu is broken...</h1>
-      <h2>An unhandled error occurred!</h2>
+    <div className="p-2">
+      <b>An unhandled error occurred!</b>
       <blockquote>
         <pre>
           {error.message}
