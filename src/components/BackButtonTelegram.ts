@@ -17,7 +17,7 @@ const BackButtonTelegram = () => {
     useEffect(() => {
         if (canGoBack) backButton.show();
         else backButton.hide();
-    }, [canGoBack])
+    }, [canGoBack, backButton])
 
     const handleBack = () => {
         if (canGoBack) router.back();
