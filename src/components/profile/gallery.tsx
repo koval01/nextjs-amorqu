@@ -29,18 +29,18 @@ const GalleryMap = ({ pictures, i18n, t }: GalleryMapProps) => {
             .sort((a, b) => b.createdAt - a.createdAt)
             .map((pic, index) =>
             (
-                <Card key={index} className="rounded-xl">
+                <Card key={index} className="rounded-md max-w-52">
                     <Image
                         src={pic.url} alt={t("Users's image")}
-                        className="!rounded-xl"
+                        className="!rounded-md"
                         style={{
-                            height: "18rem",
+                            height: "8rem",
                             width: "auto"
                         }}
                     />
                     <div className="absolute bottom-0">
-                        <div className="vkuiContentBadge--primary-accent p-1 rounded-tr-lg rounded-bl-xl">
-                            <p className="vkuiTypography--weight-2 ml-1 pr-1 text-sm first-letter:uppercase">
+                        <div className="vkuiContentBadge--primary-accent p-0.5 rounded-tr rounded-bl-md">
+                            <p className="vkuiTypography--weight-2 ml-0.5 pr-0.5 text-xs first-letter:uppercase">
                                 {formatDate(pic.createdAt / 1e3, i18n)}
                             </p>
                         </div>
@@ -65,7 +65,7 @@ const Gallery = ({ pictures, profile }: GalleryProps) => {
     return (
         picturesAvailability ? (
             <Group header={<Header>{!profile ? <Skeleton width={105} /> : t("Users's gallery")}</Header>}>
-                {!profile ? (<Skeleton height={288} className="rounded-xl" />) : (
+                {!profile ? (<Skeleton height={128} className="rounded-xl" />) : (
                     <CardScroll size="m">
                         <GalleryMap
                             pictures={pictures}
