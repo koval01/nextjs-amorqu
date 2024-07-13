@@ -58,6 +58,7 @@ function App(props: PropsWithChildren) {
   }, [lp]);
 
   useEffect(() => {
+    miniApp.setHeaderColor(miniApp.isDark ? '#19191a' : '#ffffff');
     return bindMiniAppCSSVars(miniApp, themeParams);
   }, [miniApp, themeParams]);
 
