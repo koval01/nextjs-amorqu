@@ -28,8 +28,11 @@ import '@/tailwind.css';
 
 import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
 
+import BackButtonTelegram from '../BackButtonTelegram';
+
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { ErrorPage } from '@/components/ErrorPage';
+
 import { useTelegramMock } from '@/hooks/useTelegramMock';
 import { useDidMount } from '@/hooks/useDidMount';
 
@@ -76,6 +79,7 @@ function App(props: PropsWithChildren) {
           <div className="select-none">
             {props.children}
           </div>
+          <BackButtonTelegram />
         </AppRoot>
       </AdaptivityProvider>
     </ConfigProvider>
