@@ -1,3 +1,5 @@
+'use client';
+
 import { useRouter } from "next-nprogress-bar";
 
 import { initSettingsButton } from '@tma.js/sdk-react';
