@@ -13,12 +13,13 @@ export function ErrorPage({
   }, [error]);
 
   return (
-    <div>
+    <div className="p-4 bg-black text-white h-screen">
+      <h1>Amorqu is broken...</h1>
       <h2>An unhandled error occurred!</h2>
       <blockquote>
-        <code>
+        <pre>
           {error.message}
-        </code>
+        </pre>
       </blockquote>
       {reset && <button onClick={() => reset()}>Try again</button>}
     </div>
