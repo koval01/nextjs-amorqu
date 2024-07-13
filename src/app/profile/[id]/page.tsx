@@ -4,7 +4,7 @@ export const runtime = 'edge';
 
 import { ProfileDetails, ProfilePicture } from '@/api';
 import { useFetchData } from '@/hooks/useFetch';
-import { useLaunchParams } from '@tma.js/sdk-react';
+import { useLaunchParams } from '@telegram-apps/sdk-react';
 
 import { Group, PullToRefresh } from "@vkontakte/vkui";
 

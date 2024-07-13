@@ -2,7 +2,7 @@
 
 import { useRouter } from "next-nprogress-bar";
 
-import { initSettingsButton } from '@tma.js/sdk-react';
+import { initSettingsButton } from '@telegram-apps/sdk-react';
 
 export const SettingsButtonTelegram = () => {
     const router = useRouter();

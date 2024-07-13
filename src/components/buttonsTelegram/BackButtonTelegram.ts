@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next-nprogress-bar";
 import { usePathname, useSearchParams } from 'next/navigation';
 
-import { initBackButton } from '@tma.js/sdk-react';
+import { initBackButton } from '@telegram-apps/sdk-react';
 
 export const BackButtonTelegram = () => {
     const router = useRouter();

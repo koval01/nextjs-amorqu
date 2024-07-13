@@ -1,7 +1,7 @@
 'use client';
 
 import { ProfileDetails, UpdateProfileProps } from '@/api';
-import { useLaunchParams } from '@tma.js/sdk-react';
+import { useLaunchParams } from '@telegram-apps/sdk-react';
 
 import Main from "@/components/settings/main"
 

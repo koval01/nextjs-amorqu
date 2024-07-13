@@ -13,8 +13,7 @@
   },
   "dependencies": {
     "@sentry/nextjs": "^8.17.0",
-    "@tma.js/react-router-integration": "^4.0.3",
-    "@tma.js/sdk-react": "^2.2.8",
+    "@telegram-apps/sdk-react": "^1.1.1",
     "@vkontakte/icons": "^2.125.0",
     "@vkontakte/vkui": "^6.2.1",
     "axios": "^1.7.2",

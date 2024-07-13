@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import ApiService, { ProfileNear } from '@/api';
-import { useLaunchParams } from '@tma.js/sdk-react';
+import { useLaunchParams } from '@telegram-apps/sdk-react';
 
 import { PullToRefresh } from "@vkontakte/vkui";
 import ErrorSnackbar from '@/components/ErrorSnackbar';
