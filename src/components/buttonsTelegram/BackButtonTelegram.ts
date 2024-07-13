@@ -4,8 +4,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 
 import { initBackButton } from '@tma.js/sdk-react';
 
-
-const BackButtonTelegram = () => {
+export const BackButtonTelegram = () => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -28,5 +27,3 @@ const BackButtonTelegram = () => {
 
     return null;
 };
-
-export default BackButtonTelegram;

@@ -28,7 +28,7 @@ import '@/tailwind.css';
 
 import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
 
-import BackButtonTelegram from '../BackButtonTelegram';
+import { BackButtonTelegram, SettingsButtonTelegram } from '../buttonsTelegram';
 
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { ErrorPage } from '@/components/ErrorPage';
@@ -53,8 +53,8 @@ function App(props: PropsWithChildren) {
   const themeParams = useThemeParams();
   const viewport = useViewport();
 
-  useEffect(() => { 
-    i18nHook.changeLanguage(lp.initData?.user?.languageCode) 
+  useEffect(() => {
+    i18nHook.changeLanguage(lp.initData?.user?.languageCode)
   }, [lp]);
 
   useEffect(() => {
@@ -80,6 +80,7 @@ function App(props: PropsWithChildren) {
             {props.children}
           </div>
           <BackButtonTelegram />
+          <SettingsButtonTelegram />
         </AppRoot>
       </AdaptivityProvider>
     </ConfigProvider>
