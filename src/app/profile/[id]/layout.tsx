@@ -10,7 +10,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
     const { t } = useTranslation();
 
     return (
-        <SplitLayout header={<div></div>}>
+        <SplitLayout header={<PanelHeader delimiter="none" className="hidden md:block" />}>
             <SplitCol autoSpaced>
                 <Panel className="max-w-[920px] m-auto">
                     <PanelHeader>{t("Profile")}</PanelHeader>
