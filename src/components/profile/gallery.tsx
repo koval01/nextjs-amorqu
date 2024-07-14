@@ -65,8 +65,8 @@ const Gallery = ({ pictures, profile }: GalleryProps) => {
     return (
         picturesAvailability ? (
             <Group header={<Header>{!profile ? <Skeleton width={105} /> : t("Users's gallery")}</Header>}>
-                {!profile ? (<Skeleton height={128} className="rounded-xl" />) : (
-                    <CardScroll size="m">
+                {!profile ? (<div className="px-4 md:px-0"><Skeleton height={128} className="rounded-xl" /></div>) : (
+                    <CardScroll size="m" className="md:px-0.5">
                         <GalleryMap
                             pictures={pictures}
                             i18n={i18n}
