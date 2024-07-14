@@ -12,6 +12,7 @@
     "deploy": "pnpm next-on-pages && git push origin main"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.2.6",
     "@sentry/nextjs": "^8.17.0",
     "@telegram-apps/sdk-react": "^1.1.1",
     "@vkontakte/icons": "^2.125.0",
@@ -26,7 +27,8 @@
     "normalize.css": "^8.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-i18next": "^14.1.2"
+    "react-i18next": "^14.1.2",
+    "react-redux": "^9.1.2"
   },
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.12.1",
