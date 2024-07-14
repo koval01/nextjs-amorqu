@@ -18,6 +18,8 @@ import {
   AppRoot
 } from '@vkontakte/vkui';
 
+import StoreProvider from '@/components/StoreProvider';
+
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
@@ -106,10 +108,12 @@ function RootInner({ children }: PropsWithChildren) {
 
   return (
     <SDKProvider acceptCustomStyles debug={debug}>
-      <App>
-        <ProgressBar color={"#2688eb"} startPosition={.2} options={{ showSpinner: false }} />
-        {children}
-      </App>
+      <StoreProvider>
+        <App>
+          <ProgressBar color={"#2688eb"} startPosition={.2} options={{ showSpinner: false }} />
+          {children}
+        </App>
+      </StoreProvider>
     </SDKProvider>
   );
 }
