@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { useRouter } from "next-nprogress-bar";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 
 import { Icon28ChevronBack } from "@vkontakte/icons";

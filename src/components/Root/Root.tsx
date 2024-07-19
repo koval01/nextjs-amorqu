@@ -28,8 +28,6 @@ import { i18nStrings } from "@/i18n";
 import '@/app.css';
 import '@/tailwind.css';
 
-import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
-
 import { BackButtonTelegram, SettingsButtonTelegram } from '../buttonsTelegram';
 
 import { ErrorBoundary } from '@/components/ErrorBoundary';
@@ -110,7 +108,6 @@ function RootInner({ children }: PropsWithChildren) {
     <SDKProvider acceptCustomStyles debug={debug}>
       <StoreProvider>
         <App>
-          <ProgressBar color={"#2688eb"} startPosition={.2} options={{ showSpinner: false }} />
           {children}
         </App>
       </StoreProvider>

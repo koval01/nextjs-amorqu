@@ -6,7 +6,7 @@ import { CellButton, Group, Header, Panel, PanelHeader, SplitCol, SplitLayout } 
 import Credits from "@/components/Credits";
 
 import { useTranslation } from "react-i18next";
-import { useRouter } from "next-nprogress-bar";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const { t } = useTranslation();

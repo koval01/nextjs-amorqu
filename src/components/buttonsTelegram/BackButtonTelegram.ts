@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next-nprogress-bar";
+import { useRouter } from "next/navigation";
 import { usePathname, useSearchParams } from 'next/navigation';
 
 import { initBackButton } from '@telegram-apps/sdk-react';
